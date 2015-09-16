@@ -1,5 +1,10 @@
 require 'sinatra'
 
 get '/' do
-	"Hello World, it's #{Time.now} at the server!"
+	redirect '/Sinatra'
+end
+
+get '/:name' do
+	name = params[:name]
+	"Hello #{name}, it's #{Time.now} at the server!"
 end
