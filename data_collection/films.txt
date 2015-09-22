@@ -1,0 +1,103 @@
+Reservoir Dogs,f
+Pulp Fiction,f
+Kill Bill: Vol. 1,f
+Kill Bill: Vol. 2,f
+Inglourious Basterds,f
+Django Unchained,f
+The Dark Knight,f
+The Matrix,f
+A Nightmare on Elm Street,f
+Halloween,f
+In Bruges,f
+Donnie Darko,f
+Star Wars: Episode IV - A New Hope,f
+Star Wars: Episode V - The Empire Strkes Back,f
+Star Wars: Episode VI - Return of the Jedi,f
+Mad Max,f
+Mad Max 2: The Road Warrior,f
+Mad Max Beyond Thunderdome,f
+Mad Max: Fury Road,f
+Tron,f
+Primer,f
+Chinatown,f
+The Thing,f
+Airplane!,f
+Monty Python and the Holy Grail,f
+The Terminator,f
+Terminator 2: Judgment Day,f
+Shakma,f
+Troll 2,f
+The Room,f
+The Big Lebowski,f
+Rosemary's Baby,f
+Black Dynamite,f
+Night of the Living Dead,f
+A Fistful of Dollars,f
+For a Few Dollars More,f
+Once Upon a Time in the West,f
+Spaceballs,f
+Blazing Saddles,f
+Young Frankenstein,f
+History of the World: Part I,f
+Willy Wonka & the Chocolate Factory,f
+True Grit,f
+The Phantom of the Opera,f
+A Trip to the Moon,f
+The Big Boss,f
+Fallen Angels,f
+Seven Samurai,f
+Rambo: First Blood Part II,f
+Spy Kids 3: Game Over,f
+The Running Man,f
+Jingle All the Way,f
+True Lies,f
+//////////////////NO,NO
+Bambi,af
+Tarzan,af
+The Lion King,af
+The Hunchback of Notre Dame,af
+Toy Story,af
+Toy Story 2,af
+The Incredibles,af
+Wall-E,af
+Spirited Away,af
+Princess Mononoke,af
+Akira,af
+Fullmetal Alchemist: The Sacred Star of Milos,af
+//////////////////NO,NO
+The X-Files,ls
+Firefly,ls
+Monty Python's Flying Circus,ls
+Arrested Development,ls
+Orange is the New Black,ls
+The IT Crowd,ls
+Breaking Bad,ls
+Dexter,ls
+Star Trek: Voyager,ls
+Star Trek: The Next Generation,ls
+It's Always Sunny in Philadelphia,ls
+Twin Peaks,ls
+The Twilight Zone,ls
+//////////////////NO,NO
+Berserk,as
+Avatar: The Last Airbender,as
+Attack on Titan,as
+The Boondocks,as
+Animatrix,as
+Bojack Horseman,as
+Futurama,as
+Cowboy Bebop,as
+Samurai Champloo,as
+Dragon Ball,as
+Dragon Ball Z,as
+Fullmetal Alchemist,as
+Justice League,as
+//////////////////NO,NO
+Metal Gear Solid,vg
+Metal Gear Solid 2: Sons of Liberty,vg
+Metal Gear Solid 3: Snake Eater,vg
+Chrono Trigger,vg
+Kingdom Hearts,vg
+Kingdom Hearts II,vg
+Resident Evil 4,vg
+Silent Hill 2,vg
