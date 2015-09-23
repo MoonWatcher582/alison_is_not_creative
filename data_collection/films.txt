@@ -11,7 +11,7 @@ Halloween
 In Bruges
 Donnie Darko
 Star Wars: Episode IV - A New Hope
-Star Wars: Episode V - The Empire Strkes Back
+Star Wars: Episode V - The Empire Strikes Back
 Star Wars: Episode VI - Return of the Jedi
 Mad Max
 Mad Max 2: The Road Warrior
@@ -47,7 +47,7 @@ The Big Boss
 Fallen Angels
 Seven Samurai
 Rambo: First Blood Part II
-Spy Kids 3: Game Over
+Spy Kids 3-D: Game Over
 The Running Man
 Jingle All the Way
 True Lies
@@ -94,10 +94,10 @@ Fullmetal Alchemist
 Justice League
 FLCL
 
-Metal Gear Solid
+Metal Gear Solid: The Twin Snakes
 Metal Gear Solid 2: Sons of Liberty
 Metal Gear Solid 3: Snake Eater
-Chrono Trigger
+Metal Gear Solid 4: Guns of the Patriots
 Kingdom Hearts
 Kingdom Hearts II
 Resident Evil 4
