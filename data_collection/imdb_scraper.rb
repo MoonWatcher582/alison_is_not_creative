@@ -19,11 +19,15 @@ source_data.each_line do |film|
 
 	if res.is_a?(Net::HTTPSuccess)
 		film_info = JSON.parse(res.body)
-		success_file.puts "#{film_info['Title']};#{film_info['Year']};"\
+		if not film_info.any?
+			failed_file.puts "failed to access #{film}"
+		else
+			success_file.puts "#{film_info['Title']};#{film_info['Year']};"\
 				"#{film_info['Rated']};#{film_info['Genre']};"\
 				"#{film_info['Director']};#{film_info['Actors']};"\
 				"#{film_info['Country']};#{film_info['Poster']};"\
 				"#{film_info['Type']}"
+		end
 	else
 		failed_file.puts "failed to access #{film}"
 	end

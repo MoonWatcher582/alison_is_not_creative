@@ -6,65 +6,150 @@ Inglourious Basterds
 Django Unchained
 The Dark Knight
 The Matrix
-A Nightmare on Elm Street
-Halloween
-In Bruges
-Donnie Darko
-Star Wars: Episode IV - A New Hope
-Star Wars: Episode V - The Empire Strikes Back
-Star Wars: Episode VI - Return of the Jedi
 Mad Max
 Mad Max 2: The Road Warrior
 Mad Max Beyond Thunderdome
 Mad Max: Fury Road
 Tron
-Primer
-Chinatown
-The Thing
-Airplane!
-Monty Python and the Holy Grail
+Rambo: First Blood Part II
+The Running Man
+Jingle All the Way
+True Lies
+Total Recall
 The Terminator
 Terminator 2: Judgment Day
+Guardians of the Galaxy
+The Big Boss
+A Nightmare on Elm Street
+The Phantom of the Opera
+Halloween
+The Thing
+Night of the Living Dead
+Rosemary's Baby
 Shakma
+King Kong
+Godzilla
+Dracula
+Frankenstein
+Bride of Frankenstein
+Son of Frankenstein
+In Bruges
+Zombieland
+Airplane!
+Airplane II: The Sequel
+Monty Python and the Holy Grail
 Troll 2
+Spy Kids 3-D: Game Over
+Black Dynamite
 The Room
 The Big Lebowski
-Rosemary's Baby
-Black Dynamite
-Night of the Living Dead
-A Fistful of Dollars
-For a Few Dollars More
-Once Upon a Time in the West
+Forrest Gump
 Spaceballs
 Blazing Saddles
 Young Frankenstein
 History of the World: Part I
 Willy Wonka & the Chocolate Factory
-True Grit
-The Phantom of the Opera
+Who Framed Roger Rabbit
+James and the Giant Peach
+Dragonball: Evolution
+Shaun of the Dead
+Hot Fuzz
+The World's End
+Scott Pilgrim
+The Grand Budapest Hotel
+Juno
+Hackers
+Bruce Almighty
+Ace Ventura: Pet Detective
+Ace Ventura: When Nature Calls
+Zombie Strippers!
+Thankskilling
+Mean Girls
+Mortal Kombat
+Mortal Kombat: Annihilation
+Dead Alive
 A Trip to the Moon
-The Big Boss
+Back to the Future
+Back to the Future Part II
+Back to the Future Part III
+Donnie Darko
 Fallen Angels
 Seven Samurai
-Rambo: First Blood Part II
-Spy Kids 3-D: Game Over
-The Running Man
-Jingle All the Way
-True Lies
+Chinatown
+The Godfather
+Apocalypse Now
+Goodfellas
+Casino
+Shutter Island
+Saving Private Ryan
+Grease
+Eraserhead
+Blue Velvet
+Eternal Sunshine of the Spotless Mind
+Being John Malkovich
+Adaptation
+Synecdoche New York
+Star Wars: Episode IV - A New Hope
+Star Wars: Episode V - The Empire Strikes Back
+Star Wars: Episode VI - Return of the Jedi
+Primer
+Starship Troopers
+Dune
+The Lord of the Rings: The Fellowship of the Ring
+The Lord of the Rings: The Two Towers 
+The Lord of the Rings: The Return of the King
+A Fistful of Dollars
+For a Few Dollars More
+The Good, The Bad and The Ugly
+Once Upon a Time in the West
+True Grit
 
+Akira
+Perfect Blue
+The End of Evangelion
+Pokemon: The First Movie
+Cowboy Bebop: The Movie
+Dragon Ball: Curse of the Blood Rubies
+Dragon Ball: Sleeping Princess in Devil's Castle
+Dragon Ball: Mystical Adventure
+Dragon Ball: The Path to Power
+Fullmetal Alchemist: The Sacred Star of Milos
+The Girl Who Leapt Through Time
+Pinocchio
+Fantasia
 Bambi
-Tarzan
+Alice in Wonderland
+Peter Pan
+Cinderella
+The Many Adventures of Winnie the Pooh
+Aladdin
+The Nightmare Before Christmas
 The Lion King
 The Hunchback of Notre Dame
+Hercules
+Pocahontas
+Mulan
+Tarzan
+Tangled
 Toy Story
+A Bug's Life
 Toy Story 2
+Monsters, Inc.
+Finding Nemo
 The Incredibles
 Wall-E
-Spirited Away
+Up
+Blues Clues
+Kiki's Delivery Service
 Princess Mononoke
-Akira
-Fullmetal Alchemist: The Sacred Star of Milos
+Spirited Away
+Howl's Moving Castle
+Castle in the Sky
+Final Fantasy VII: Advent Children
 
+Burn Notice
+Parks and Recreation
+Arrow
 The X-Files
 Firefly
 Monty Python's Flying Circus
@@ -78,27 +163,108 @@ Star Trek: The Next Generation
 It's Always Sunny in Philadelphia
 Twin Peaks
 The Twilight Zone
+Full House
+Friends
+House
+How I Met Your Mother
+Chuck
+Doctor Who
+Agents of S.H.I.E.L.D.
+Daredevil
+Heroes
+Scrubs
+NCIS
+Sherlock
+Merlin
+Buffy the Vampire Slayer
+Dollhouse
+Terminator: The Sarah Connor Chronicles
+Power Rangers
+The Office
+Game of Thrones
+The League
+Teletubbies
+Lost
 
-Berserk
-Avatar: The Last Airbender
-Attack on Titan
-The Boondocks
-Animatrix
+Family Guy
+South Park
+The Simpsons
 Bojack Horseman
+Archer
+Rick and Morty
 Futurama
+Johnny Bravo
+Ed, Edd 'n' Eddy
+Courage the Cowardly Dog
+Grim and Evil
+The Grim Adventures of Billy and Mandy
+The Fairly Oddparents
+Teen Titans
+Justice League
+Animatrix
+The Super Mario Bros. Super Show!
+Sonic the Hedgehog
+The Boondocks
+Avatar: The Last Airbender
+Avatar: The Legend of Korra
+FLCL
+Neon Genesis Evangelion
 Cowboy Bebop
 Samurai Champloo
+Berserk
+Fullmetal Alchemist
+Attack on Titan
 Dragon Ball
 Dragon Ball Z
-Fullmetal Alchemist
-Justice League
-FLCL
+Dragon Ball Super
+Sailor Moon
+Card Capture
+Pokemon
+Bleach
+One Piece
+Fairy Tail
+Yu-Gi-Oh
+Digimon
+Naruto
+Gurren Lagann
+Death Note
+Soul Eater
+Magi
+Blue Exorcist
+Sword Art Online
+Gintama
+Durarara
+Space Dandy
 
 Metal Gear Solid: The Twin Snakes
 Metal Gear Solid 2: Sons of Liberty
 Metal Gear Solid 3: Snake Eater
 Metal Gear Solid 4: Guns of the Patriots
+Metal Gear Solid V: The Phantom Pain
+Thief: The Dark Project
+Thief 2: The Metal Age
+Final Fantasy X
+Final Fantasy XII
+Final Fantasy XIII
+Tales of Xilia
+Tales of Symphonia
+Fire Emblem: Awakening
+Demon's Soul
+Dark Souls
+Bloodborne
+Fallout 3
+Fallout: New Vegas
+Borderlands
 Kingdom Hearts
 Kingdom Hearts II
 Resident Evil 4
 Silent Hill 2
+Silent Hill 3
+The Last of Us
+Shadow of the Colossus
+Red Dead Redemption
+Indigo Prophecy
+Heavy Rain
+Beyond: Two Souls
+Super Mario 64
+The Legend of Zelda: The Wind Waker
