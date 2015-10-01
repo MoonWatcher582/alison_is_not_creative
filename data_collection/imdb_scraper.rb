@@ -4,8 +4,8 @@ require 'json'
 uri = URI('http://www.omdbapi.com/')
 
 SOURCE = "films.txt"
-SUCCESS_FILE = "suc.txt"
-FAILED_FILE = "fail.txt"
+SUCCESS_FILE = "out/suc.txt"
+FAILED_FILE = "out/fail.txt"
 
 success_file = File.open(SUCCESS_FILE, 'w')
 failed_file = File.open(FAILED_FILE, 'w')
@@ -19,7 +19,8 @@ source_data.each_line do |film|
 
 	if res.is_a?(Net::HTTPSuccess)
 		film_info = JSON.parse(res.body)
-		if not film_info.any?
+		if film == "\n"
+		elsif film_info['Response'] == "False" 
 			failed_file.puts "failed to access #{film}"
 		else
 			success_file.puts "#{film_info['Title']};#{film_info['Year']};"\
@@ -34,5 +35,10 @@ source_data.each_line do |film|
 end
 
 failed_file.close
+
+if File.zero? FAILED_FILE
+	File.delete FAILED_FILE
+end
+
 success_file.close
 source_data.close

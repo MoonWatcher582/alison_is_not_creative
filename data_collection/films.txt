@@ -112,7 +112,6 @@ Cowboy Bebop: The Movie
 Dragon Ball: Curse of the Blood Rubies
 Dragon Ball: Sleeping Princess in Devil's Castle
 Dragon Ball: Mystical Adventure
-Dragon Ball: The Path to Power
 Fullmetal Alchemist: The Sacred Star of Milos
 The Girl Who Leapt Through Time
 Pinocchio
@@ -196,8 +195,7 @@ Futurama
 Johnny Bravo
 Ed, Edd 'n' Eddy
 Courage the Cowardly Dog
-Grim and Evil
-The Grim Adventures of Billy and Mandy
+The Grim Adventures of Billy & Mandy
 The Fairly Oddparents
 Teen Titans
 Justice League
@@ -206,7 +204,7 @@ The Super Mario Bros. Super Show!
 Sonic the Hedgehog
 The Boondocks
 Avatar: The Last Airbender
-Avatar: The Legend of Korra
+The Legend of Korra
 FLCL
 Neon Genesis Evangelion
 Cowboy Bebop
@@ -218,7 +216,6 @@ Dragon Ball
 Dragon Ball Z
 Dragon Ball Super
 Sailor Moon
-Card Capture
 Pokemon
 Bleach
 One Piece
@@ -242,14 +239,13 @@ Metal Gear Solid 3: Snake Eater
 Metal Gear Solid 4: Guns of the Patriots
 Metal Gear Solid V: The Phantom Pain
 Thief: The Dark Project
-Thief 2: The Metal Age
+Thief II: The Metal Age
 Final Fantasy X
 Final Fantasy XII
 Final Fantasy XIII
-Tales of Xilia
 Tales of Symphonia
 Fire Emblem: Awakening
-Demon's Soul
+Demon's Souls
 Dark Souls
 Bloodborne
 Fallout 3
