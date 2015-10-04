@@ -20,6 +20,7 @@ source_data.each_line do |film|
 	if res.is_a?(Net::HTTPSuccess)
 		film_info = JSON.parse(res.body)
 		if film == "\n"
+			# Do nothing, empty line
 		elsif film_info['Response'] == "False" 
 			failed_file.puts "failed to access #{film}"
 		else
@@ -36,9 +37,7 @@ end
 
 failed_file.close
 
-if File.zero? FAILED_FILE
-	File.delete FAILED_FILE
-end
+File.delete FAILED_FILE if File.zero? FAILED_FILE
 
 success_file.close
 source_data.close
