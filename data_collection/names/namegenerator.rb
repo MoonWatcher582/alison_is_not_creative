@@ -17,9 +17,6 @@ first_name_arr = Array.new
 last_name_arr = Array.new
 full_name_arr = Array.new
 
-# Will be used to store the concatenated full name
-full_name = ""
-
 # Added each name from first_name file into an array.
 first_name_f.each_line do |line|
 	first_name_arr.push(line.chomp)
