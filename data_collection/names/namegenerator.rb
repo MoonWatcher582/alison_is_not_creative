@@ -1,0 +1,54 @@
+# Error check
+if ARGV.length != 2
+	print "FOLLOW THIS FORMAT:\nruby namegenerator.rb <first_name_file> <last_name_file>\n"
+	exit 1
+end
+
+=begin
+	Opened the files passed from the command line arguments (read only - "r").
+	Opened a file named "fullnames.txt" (create and empty file for writing - "w").
+=end
+first_name_f = File.open(ARGV[0],"r")
+last_name_f = File.open(ARGV[1], "r")
+full_name_f = File.open("fullnames.txt", "w")
+
+# Declared arrays to store the names taken from the files.
+first_name_arr = Array.new
+last_name_arr = Array.new
+full_name_arr = Array.new
+
+# Will be used to store the concatenated full name
+full_name = ""
+
+# Added each name from first_name file into an array.
+first_name_f.each_line do |line|
+	first_name_arr.push(line.chomp)
+end
+
+# Added each name from last_name file into an array.
+last_name_f.each_line do |line|
+	last_name_arr.push(line.chomp)
+end
+
+# Shuffles the elements within each array (randomizes)
+first_name_arr.shuffle!
+last_name_arr.shuffle!
+
+=begin
+	Concatenated the first and last name together.
+ 	Added the combined name into an array.	
+=end
+for i in 0...50
+	name = first_name_arr[i] << " " << last_name_arr[i]
+	full_name_arr.push(name)
+end
+
+# Wrote every full name in the array into the file "fullnames.txt"
+full_name_arr.each do |name|
+	full_name_f.puts(name)
+end
+
+# Close files.
+first_name_f.close
+last_name_f.close
+full_name_f.close
