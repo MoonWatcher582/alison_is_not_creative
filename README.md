@@ -2,7 +2,7 @@ T H E  M A G I C  C O M P A S S
 
 Ruby/Sinatra-based movie recommendation platform for the avid movie watcher who does not have acces to Netflix. 
 
-Data scrapped from IMDb, users currently generated at random, all placed in a MySQL database using Ruby's Sequel library. 
+Data scrapped from IMDb using OMDb (http://www.omdbapi.com), users are currently generated at random; all placed in a MySQL database using Ruby's Sequel library. 
 
 
 
