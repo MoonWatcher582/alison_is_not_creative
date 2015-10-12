@@ -7,8 +7,11 @@ Data scrapped from IMDb, users currently generated at random, all placed in a My
 
 
 @TODO 
-*	Add a random amount of random 'liked' movies to the fullnames file 
+*	Add a random amount of random 'liked' movies to the fullnames file (update name generator)
+*	Create a Schema.sql file
+*	Build the database given the 'users.txt' and 'film_info.txt' in a new Ruby script
+*	Create a login system: store user/pass in db but hash pass 
+*	Create a login page
 *	Create a home page, recommends movies based on the user logged in 
 *	Create a user page/user 
-*	Create a login system: store user/pass in db but hash pass 
-*	recommendation system 
+*	Create recommendation system 
