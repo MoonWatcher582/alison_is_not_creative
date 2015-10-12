@@ -7,8 +7,10 @@ Data scrapped from IMDb using OMDb (http://www.omdbapi.com), users are currently
 
 
 @TODO 
+*	Scrape data from imdb (Eric - Completed)
+*	Generate random names (Alison - Completed)
 *	Add a random amount of random 'liked' movies to the fullnames file (update name generator)
-*	Create a Schema.sql file
+*	Create a Schema.sql file (Eric)
 *	Build the database given the 'users.txt' and 'film_info.txt' in a new Ruby script
 *	Create a login system: store user/pass in db but hash pass 
 *	Create a login page
