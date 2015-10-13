@@ -44,13 +44,16 @@ CREATE TABLE acted_in(
 	FOREIGN KEY(actor_id) REFERENCES actors(id)
 );
 
-CREATE TABLE worked_with(
-	id          INTEGER PRIMARY KEY,
-	actor_id    INTEGER NOT NULL,
-	director_id INTEGER NOT NULL,
-	FOREIGN KEY(actor_id) REFERENCES actor(id),
-	FOREIGN KEY(director_id) REFERENCES directors(id)
-);
+/*
+ *	A View is a virtual table,
+ *	used as an alias for the sql statement below.
+ *	The relationship for worked_with can be
+ *	easily be accessed from other tables.
+ */
+CREATE VIEW [worked_with] AS
+	SELECT DISTINCT d.director_id, a.actor_id
+		FROM directed_by d, acted_in a
+		WHERE d.film_id = a.film_id;
 
 CREATE TABLE likes_actor(
 	id       INTEGER PRIMARY KEY,
