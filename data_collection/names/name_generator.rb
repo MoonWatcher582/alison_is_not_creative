@@ -1,6 +1,6 @@
 # Error check
 if ARGV.length != 2
-	print "FOLLOW THIS FORMAT:\nruby namegenerator.rb <first_name_file> <last_name_file>\n"
+	puts "ruby name_generator.rb <first_name_file> <last_name_file>"
 	exit 1
 end
 
