@@ -1,26 +1,30 @@
 CREATE TABLE movies(
-	id       INTEGER PRIMARY KEY,
+	id       INTEGER PRIMARY KEY AUTOINCREMENT,
 	title    TEXT UNIQUE NOT NULL,
 	year     SMALLINT NOT NULL,
 	rated    TEXT NOT NULL,
 	poster   TEXT NOT NULL,
 	country  TEXT NOT NULL,
-	genre    TEXT NOT NULL,
 	f_type   TEXT NOT NULL
 );
 
+CREATE TABLE genres(
+	id		INTEGER PRIMARY KEY AUTOINCREMENT,
+	genre	TEXT UNIQUE NOT NULL
+);
+
 CREATE TABLE actors(
-	id    INTEGER PRIMARY KEY,
+	id    INTEGER PRIMARY KEY AUTOINCREMENT,
 	name  TEXT UNIQUE NOT NULL
 );
 
 CREATE TABLE directors(
-	id    INTEGER PRIMARY KEY,
+	id    INTEGER PRIMARY KEY AUTOINCREMENT,
 	name  TEXT UNIQUE NOT NULL
 );
 
 CREATE TABLE users(
-	id             INTEGER PRIMARY KEY,
+	id             INTEGER PRIMARY KEY AUTOINCREMENT,
 	name           TEXT NOT NULL,
 	country        TEXT NOT NULL,
 	favorite_genre TEXT,
@@ -28,8 +32,16 @@ CREATE TABLE users(
 	pass_hash      TEXT NOT NULL
 );
 
+CREATE TABLE is_genre(
+	id			INTEGER PRIMARY KEY AUTOINCREMENT,
+	film_id	INTEGER NOT NULL,
+	genre_id	INTEGER NOT NULL,
+	FOREIGN KEY(film_id) REFERENCES movies(id),
+	FOREIGN KEY(genre_id) REFERENCES genres(id)
+);
+
 CREATE TABLE directed_by(
-	id          INTEGER PRIMARY KEY,
+	id          INTEGER PRIMARY KEY AUTOINCREMENT,
 	film_id     INTEGER NOT NULL,
 	director_id INTEGER NOT NULL,
 	FOREIGN KEY(film_id) REFERENCES movies(id),
@@ -37,7 +49,7 @@ CREATE TABLE directed_by(
 );
 
 CREATE TABLE acted_in(
-	id       INTEGER PRIMARY KEY,
+	id       INTEGER PRIMARY KEY AUTOINCREMENT,
 	film_id  INTEGER NOT NULL,
 	actor_id INTEGER NOT NULL,
 	FOREIGN KEY(film_id) REFERENCES movies(id),
@@ -56,7 +68,7 @@ CREATE VIEW [worked_with] AS
 		WHERE d.film_id = a.film_id;
 
 CREATE TABLE likes_actor(
-	id       INTEGER PRIMARY KEY,
+	id       INTEGER PRIMARY KEY AUTOINCREMENT,
 	user_id  INTEGER NOT NULL,
 	actor_id INTEGER NOT NULL,
 	FOREIGN KEY(user_id) REFERENCES users(id),
@@ -64,7 +76,7 @@ CREATE TABLE likes_actor(
 );
 
 CREATE TABLE likes_director(
-	id          INTEGER PRIMARY KEY,
+	id          INTEGER PRIMARY KEY AUTOINCREMENT,
 	user_id     INTEGER NOT NULL,
 	director_id INTEGER NOT NULL,
 	FOREIGN KEY(user_id) REFERENCES users(id),
@@ -72,7 +84,7 @@ CREATE TABLE likes_director(
 );
 
 CREATE TABLE likes_movie(
-	id       INTEGER PRIMARY KEY,
+	id       INTEGER PRIMARY KEY AUTOINCREMENT,
 	user_id  INTEGER NOT NULL,
 	film_id  INTEGER NOT NULL,
 	FOREIGN KEY(user_id) REFERENCES users(id),
