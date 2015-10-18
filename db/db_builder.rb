@@ -24,11 +24,11 @@ ACTOR_TABLE = "actors"
 =end
 def insert_single_value(value, table, column)
 	value = "'#{value}'"
-	DB.run("INSERT INTO #{table} (#{column}) VALUES (#{value})") if element_exists?(value, table, column) 
+	DB.run("INSERT INTO #{table} (#{column}) VALUES (#{value})") if not element_exists?(value, table, column)
 end
 
 def element_exists?(value, table, column)
-	DB["SELECT * FROM #{table} WHERE #{column} = #{value}"].count == 0
+	DB["SELECT * FROM #{table} WHERE #{column} = #{value}"].count > 0
 end
 
 #	Open input file and database connection
@@ -47,7 +47,7 @@ film_info.each_line do |line|
 	movie_values = "'#{movie.title}', '#{movie.year}', '#{movie.rated}', '#{movie.poster}', '#{movie.country}', '#{movie.type}'"
 	DB.run("INSERT INTO movies (#{MOVIE_COLUMNS}) VALUES (#{movie_values})") if element_exists?("'#{movie.title}'", "movies", "title")
 
-	movie.genres.map{|genre| insert_single_value(genre, GENRE_TABLE, GENRE_COLUMN)}
-	movie.directors.map{|director| insert_single_value(director, DIRECTOR_TABLE, DIRECTOR_COLUMN)}
-	movie.actors.map{|actor| insert_single_value(actor, ACTOR_TABLE, ACTOR_COLUMN)}
+	movie.genres.each {|genre| insert_single_value(genre, GENRE_TABLE, GENRE_COLUMN)}
+	movie.directors.each {|director| insert_single_value(director, DIRECTOR_TABLE, DIRECTOR_COLUMN)}
+	movie.actors.each {|actor| insert_single_value(actor, ACTOR_TABLE, ACTOR_COLUMN)}
 end

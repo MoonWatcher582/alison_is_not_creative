@@ -12,7 +12,7 @@ SCHEMA="schema.sql"
 if [ $# -ne 2 ]; then
 	echo "Database and Schema files not both provided, using default values"
 else
-	DATABSE="$1"
+	DATABASE="$1"
 	SCHEMA="$2"
 fi
 

@@ -11,6 +11,7 @@ success_file = File.open(SUCCESS_FILE, 'w')
 failed_file = File.open(FAILED_FILE, 'w')
 source_data = File.open(SOURCE, 'r')
 
+puts "Scraping..."
 source_data.each_line do |film|
 
 	params = { :t => film }
