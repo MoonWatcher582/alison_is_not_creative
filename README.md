@@ -1,6 +1,6 @@
 T H E  M A G I C  C O M P A S S 
 
-Ruby/Sinatra-based movie statistic platform. 
+Ruby/Sinatra-based movie statistic platform for film investors trying to see if a new movie might be a good idea, based on previous films and audiences. 
 
 Data scrapped from IMDb using OMDb (http://www.omdbapi.com), users are currently generated at random; all placed in a MySQL database using Ruby's Sequel library (http://sequel.jeremyevans.net/rdoc/files/doc/sql_rdoc.html). 
 
