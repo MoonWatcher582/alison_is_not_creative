@@ -16,12 +16,13 @@ Data scrapped from IMDb using OMDb (http://www.omdbapi.com), users are currently
 
 @TODO - Queries
 *	View movies by country
-	*	How many movies from X country have good ratings?
-	*	Do coutry of users and country of movie affect rating (correlations)?
+	*	How many movies from X country have good ratings? (see if your audience is world-wide, which coutries produce good movies?)
+	*	Do coutry of users and country of movie affect rating (correlations)? (if your audience does not reflect your movie, the movie will flop)
+	*	Most popular countries for a certain actors (sum of fans/country, if this actor does well in X but target audience is Y, this movie will flop)
 *	View director trends 
-	*	Are movies better when certain directors work with certain actors?
-	*	Are movies better when certain directors make movies of certain genres?
-	*	Do director careers get better or worse with time?
+	*	Are movies better when certain directors work with certain actors? (if so, for your movie, good)
+	*	Are movies better when certain directors make movies of certain genres? (if so, for your movie, good)
+	*	Do director careers get better or worse with time? (if this director no longer makes good movies, well, oh no)
 *	View actor trends
 	*	Do actor careers get better or worse with time?
 	*	Do actors do better in certain roles (genres)?
