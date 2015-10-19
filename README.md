@@ -16,15 +16,15 @@ Data scrapped from IMDb using OMDb (http://www.omdbapi.com), users are currently
 
 @TODO - Queries
 *	View movies by country
-*	*	How many movies from X country have good ratings?
-*	*	Do coutry of users and country of movie affect rating (correlations)?
+	*	How many movies from X country have good ratings?
+	*	Do coutry of users and country of movie affect rating (correlations)?
 *	View director trends 
-*	*	Are movies better when certain directors work with certain actors?
-*	*	Are movies better when certain directors make movies of certain genres?
-*	*	Do director careers get better or worse with time?
+	*	Are movies better when certain directors work with certain actors?
+	*	Are movies better when certain directors make movies of certain genres?
+	*	Do director careers get better or worse with time?
 *	View actor trends
-*	*	Do actor careers get better or worse with time?
-*	*	Do actors do better in certain roles (genres)?
+	*	Do actor careers get better or worse with time?
+	*	Do actors do better in certain roles (genres)?
 
 @TODO - Website
 *	Create a login system: store user/pass in db but hash pass 
