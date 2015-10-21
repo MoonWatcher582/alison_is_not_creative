@@ -26,8 +26,8 @@ CREATE TABLE directors(
 CREATE TABLE users(
 	id             INTEGER PRIMARY KEY AUTOINCREMENT,
 	name           TEXT NOT NULL,
+	age				INTEGER NOT NULL,
 	country        TEXT NOT NULL,
-	favorite_genre TEXT,
 	login_name     TEXT UNIQUE NOT NULL,
 	pass_hash      TEXT NOT NULL
 );
@@ -67,24 +67,9 @@ CREATE VIEW [worked_with] AS
 		FROM directed_by d, acted_in a
 		WHERE d.film_id = a.film_id;
 
-CREATE TABLE likes_actor(
+CREATE TABLE movie_rating(
 	id       INTEGER PRIMARY KEY AUTOINCREMENT,
-	user_id  INTEGER NOT NULL,
-	actor_id INTEGER NOT NULL,
-	FOREIGN KEY(user_id) REFERENCES users(id),
-	FOREIGN KEY(actor_id) REFERENCES actor(id)
-);
-
-CREATE TABLE likes_director(
-	id          INTEGER PRIMARY KEY AUTOINCREMENT,
-	user_id     INTEGER NOT NULL,
-	director_id INTEGER NOT NULL,
-	FOREIGN KEY(user_id) REFERENCES users(id),
-	FOREIGN KEY(director_id) REFERENCES directors(id)
-);
-
-CREATE TABLE likes_movie(
-	id       INTEGER PRIMARY KEY AUTOINCREMENT,
+	rating	NUMBER NOT NULL,
 	user_id  INTEGER NOT NULL,
 	film_id  INTEGER NOT NULL,
 	FOREIGN KEY(user_id) REFERENCES users(id),
