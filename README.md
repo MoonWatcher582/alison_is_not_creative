@@ -27,6 +27,7 @@ Data scrapped from IMDb using OMDb (http://www.omdbapi.com), users are currently
 	*	Do actor careers get better or worse with time?
 	*	Do actors do better in certain roles (genres)?
 	*	Do actors do better in certain countries? (sum of fans/country, if this actor does well in X but target audience is Y, bad)
+*	Movie by rating?
 
 @TODO - Website
 *	Create a login system: store user/pass in db but hash pass 
