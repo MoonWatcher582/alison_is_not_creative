@@ -4,13 +4,14 @@ require 'json'
 uri = URI('http://www.omdbapi.com/')
 
 SOURCE = "films.txt"
-SUCCESS_FILE = "out/suc.txt"
-FAILED_FILE = "out/fail.txt"
+SUCCESS_FILE = "film_info.txt"
+FAILED_FILE = "film_not_found.txt"
 
 success_file = File.open(SUCCESS_FILE, 'w')
 failed_file = File.open(FAILED_FILE, 'w')
 source_data = File.open(SOURCE, 'r')
 
+puts "Scraping..."
 source_data.each_line do |film|
 
 	params = { :t => film }

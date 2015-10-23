@@ -1,6 +1,6 @@
 # Error check
-if ARGV.length != 4
-	print "FOLLOW THIS FORMAT:\nruby namegenerator.rb <first_name_file> <last_name_file> <countries_file> <films_file>\n"
+if ARGV.length != 3
+	print "FOLLOW THIS FORMAT:\nruby namegenerator.rb <first_name_file> <last_name_file> <countries_file>\n"
 	exit 1
 end
 
@@ -11,14 +11,14 @@ end
 first_name_f = File.open(ARGV[0],"r")
 last_name_f = File.open(ARGV[1], "r")
 countries_f = File.open(ARGV[2], "r")
-genres_f = File.open(ARGV[3], "r")
+#genres_f = File.open(ARGV[3], "r")
 users_f = File.open("users.txt", "w")
 
 # Declared arrays to store the elements taken from the files.
 first_name_arr = Array.new
 last_name_arr = Array.new
 countries_arr = Array.new
-genres_arr = Array.new
+#genres_arr = Array.new
 
 # Added each element from indiviual files into arrays.
 first_name_f.each_line do |line|
@@ -33,15 +33,17 @@ countries_f.each_line do |line|
 	countries_arr.push(line.chomp)
 end
 
+=begin
 genres_f.each_line do |line|
 	genres_arr.push(line.chomp)
 end
+=end
 
 # Shuffles the elements within each array (randomizes)
 first_name_arr.shuffle!
 last_name_arr.shuffle!
 countries_arr.shuffle!
-genres_arr.shuffle!
+#genres_arr.shuffle!
 
 =begin
 	Concatenated the first and last name together.
