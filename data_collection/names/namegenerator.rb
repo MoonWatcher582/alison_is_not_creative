@@ -1,6 +1,6 @@
 # Error check
-if ARGV.length != 2
-	print "FOLLOW THIS FORMAT:\nruby namegenerator.rb <first_name_file> <last_name_file>\n"
+if ARGV.length != 4
+	print "FOLLOW THIS FORMAT:\nruby namegenerator.rb <first_name_file> <last_name_file> <countries_file> <films_file>\n"
 	exit 1
 end
 
@@ -10,36 +10,72 @@ end
 =end
 first_name_f = File.open(ARGV[0],"r")
 last_name_f = File.open(ARGV[1], "r")
-full_name_f = File.open("fullnames.txt", "w")
+countries_f = File.open(ARGV[2], "r")
+genres_f = File.open(ARGV[3], "r")
+users_f = File.open("users.txt", "w")
 
-# Declared arrays to store the names taken from the files.
+# Declared arrays to store the elements taken from the files.
 first_name_arr = Array.new
 last_name_arr = Array.new
+countries_arr = Array.new
+genres_arr = Array.new
 
-# Added each name from first_name file into an array.
+# Added each element from indiviual files into arrays.
 first_name_f.each_line do |line|
 	first_name_arr.push(line.chomp)
 end
 
-# Added each name from last_name file into an array.
 last_name_f.each_line do |line|
 	last_name_arr.push(line.chomp)
+end
+
+countries_f.each_line do |line|
+	countries_arr.push(line.chomp)
+end
+
+genres_f.each_line do |line|
+	genres_arr.push(line.chomp)
 end
 
 # Shuffles the elements within each array (randomizes)
 first_name_arr.shuffle!
 last_name_arr.shuffle!
+countries_arr.shuffle!
+genres_arr.shuffle!
 
 =begin
 	Concatenated the first and last name together.
 	Wrote the full name into the file "fullnames.txt"
 =end
-for i in 0...50
-	name = first_name_arr[i] << " " << last_name_arr[i]
-	full_name_f.puts(name)
+j = 0;
+k = 0;
+for i in 0...first_name_arr.length
+	numgenres = rand(1...4)
+	age = rand(18...50)
+	
+	if j == countries_arr.length
+		countries_arr.shuffle!
+		j = 0;
+	end
+	
+	line = first_name_arr[i] << " " << last_name_arr[i] << "," << countries_arr[j] << "," << age.to_s #<< ";"
+	
+	for n in 1..numgenres
+		if n == numgenres
+			#line = line << genres_arr[k]
+		else
+			#line = line << genres_arr[k] << ","
+		end
+		# puts(line)
+		k+=1
+	end
+	genres_arr.shuffle!
+	users_f.puts(line)
+	j+=1;
 end
 
 # Close files.
 first_name_f.close
 last_name_f.close
-full_name_f.close
+countries_f.close
+users_f.close
