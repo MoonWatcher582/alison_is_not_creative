@@ -54,21 +54,23 @@ puts "Parsing and inserting from #{ARGV[1]}"
 genre_data.each_line do |line|
 	genre = line.chomp.split(',')
 	insert_value("'#{genre[1]}'", GENRE_TABLE, GENRE_COLUMN)
-
+	DB.run("INSERT INTO is_genre (film_id, genre_id) VALUES ( (SELECT m.id FROM movies m WHERE m.title = '#{genre[0]}'), (SELECT g.id FROM genres g WHERE g.genre = '#{genre[1]}') )")
 end
 
 puts "Parsing and inserting from #{ARGV[2]}"
 director_data.each_line do |line|
+	puts "Working on tuple: #{line}"
 	director = line.chomp.split(',')
 	insert_value("'#{director[1]}'", DIRECTOR_TABLE, DIRECTOR_COLUMN)
-
+	DB.run("INSERT INTO directed_by (film_id, director_id) VALUES ( (SELECT m.id FROM movies m WHERE m.title = '#{director[0]}'), (SELECT d.id FROM directors d WHERE d.name = '#{director[1]}') )")
 end
 
 puts "Parsing and inserting from #{ARGV[3]}"
 actor_data.each_line do |line|
+	puts "Working on tuple: #{line}"
 	actor = line.chomp.split(',')
 	insert_value("'#{actor[1]}'", ACTOR_TABLE, ACTOR_COLUMN)
-
+	DB.run("INSERT INTO acted_in (film_id, actor_id) VALUES ( (SELECT m.id FROM movies m WHERE m.title = '#{actor[0]}'), (SELECT a.id FROM actors a WHERE a.name = '#{actor[1]}') )")
 end
 
 puts "Cleaning up..."
