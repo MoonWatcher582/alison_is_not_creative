@@ -9,10 +9,11 @@ Data scrapped from IMDb using OMDb (http://www.omdbapi.com), users are currently
 @TODO - Database
 *	Scrape data from imdb (Eric - Completed)
 *	Generate random names (Alison - Completed)
-*	Add a random amount of random 'seen' movies to the fullnames file (update name generator)
-*	Give each movie each person has seen a rating with trends built-in
+*	Add a random amount of random 'seen' movies to the fullnames file (update name generator) (Alison - Complete)
+*	Give each movie each person has seen a rating with trends built-in (Alison)
 *	Create a Schema.sql file (Eric - Completed)
-*	Build the database given the 'users.txt' and 'film_info.txt' in a new Ruby script (Eric)
+*	Build the database given the 'film_info.txt' in a new Ruby script (Eric - Completed)
+*	Build the database given the 'users.txt' in a new Ruby script (Alison)
 
 @TODO - Queries
 *	View movies by country
