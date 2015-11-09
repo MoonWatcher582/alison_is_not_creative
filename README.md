@@ -2,8 +2,9 @@ T H E  M A G I C  C O M P A S S
 
 Ruby/Sinatra-based movie statistic platform for film investors trying to see if a new movie might be a good idea, based on previous films and audiences. 
 
-Data scrapped from IMDb using OMDb (http://www.omdbapi.com), users are currently generated at random; all placed in a MySQL database using Ruby's Sequel library (http://sequel.jeremyevans.net/rdoc/files/doc/sql_rdoc.html). 
+Data scrapped from IMDb using OMDb (http://www.omdbapi.com), users are currently generated at random; all placed in a MySQL database hosted on AWS using Ruby's Sequel library (http://sequel.jeremyevans.net/rdoc/files/doc/sql_rdoc.html). 
 
+The website will be created with Ruby's Sinatra Library, with authentication done by Warden. Haml is used for templating and Bootstrap will be used for front-end.
 
 
 @TODO - Database
@@ -13,7 +14,8 @@ Data scrapped from IMDb using OMDb (http://www.omdbapi.com), users are currently
 *	Give each movie each person has seen a rating with trends built-in (Alison - Completed)
 *	Create a Schema.sql file (Eric - Completed)
 *	Build the database given the 'film_info.txt' in a new Ruby script (Eric - Completed)
-*	Build the database given the 'users.txt' in a new Ruby script (Alison - Completed)
+*	Build the database given the 'users.txt' in a new Ruby script (Alison)
+*	Create an AWS account with a MySQL database, and point all code at that (Eric)
 
 @TODO - Queries
 *	View movies by country
@@ -31,18 +33,18 @@ Data scrapped from IMDb using OMDb (http://www.omdbapi.com), users are currently
 *	Movie by rating?
 
 @TODO - Website
-*	Create a login/sign-up page (ALISON)
+*	Create a login/sign-up page (ERIC)
 	*	Forms for logging in and signing up
 	*	Login form redirects registered users to home page
 	*	Sign up form registers valid users
 	*	Passwords will be stored as hashes
-*	Create a home page (ERIC)
+*	Create a home page 
 	*	Form that allows a user to query for stats based on the form input
-*	Create a review submission page 
-	*	Form allowing users to submit a new review
+*	Create a rating submission page
+	*	Form allowing users to submit a new rating
 *	Create a movie submission page (may not be needed)
 	*	Form allowing users to submit new movies
-*	Create a user page 
+*	Create a user page
 	*	Listing of the table of that user's data and their reviews
 	*	Search tool for getting to other user's pages	
 *	Home page, user page for the logged-in user, and submission pages should be available via tabs

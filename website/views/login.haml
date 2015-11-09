@@ -1,6 +1,17 @@
-%h1 LOG IN HERE, BITCH
+%h1 T H E M A G I C C O M P A S S
 
 %form{ action: "/session", method: "POST" }
+  %legend LOG IN:
+  Username: 
+  %input{ name: "user"}
+  %br
+  Password: 
+  %input{ name: "pass" }
+  %br
+  %button{ type: "submit" } SUBMIT
+
+%form{ action: "/register", method: "POST" }
+  %legend REGISTER A NEW ACCOUNT:
   Username: 
   %input{ name: "user"}
   %br
