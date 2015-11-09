@@ -27,7 +27,7 @@ end
 
 for i in 0...users.length
 	name = users[i]
-	num = rand(1...6)
+	num = rand(5...10)
 	index_arr = Array.new
 
 	for k in 1..num
@@ -37,7 +37,7 @@ for i in 0...users.length
 			next
 		end			
 		index_arr.push(index)
-		rating = rand(1..6)
+		rating = rand(1..5)
 		line = "#{name},#{films[index]},#{rating.to_s}"
 		ratings_f.puts(line)
 	end
