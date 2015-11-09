@@ -25,8 +25,7 @@ films_f.each_line do |line|
 	films.push(temp[0])
 end
 
-ratings_f.puts("user,movie,rating")
-for i in 1...users.length
+for i in 0...users.length
 	name = users[i]
 	num = rand(1...6)
 	index_arr = Array.new
