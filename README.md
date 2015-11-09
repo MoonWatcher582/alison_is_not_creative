@@ -10,10 +10,10 @@ Data scrapped from IMDb using OMDb (http://www.omdbapi.com), users are currently
 *	Scrape data from imdb (Eric - Completed)
 *	Generate random names (Alison - Completed)
 *	Add a random amount of random 'seen' movies to the fullnames file (update name generator) (Alison - Complete)
-*	Give each movie each person has seen a rating with trends built-in (Alison)
+*	Give each movie each person has seen a rating with trends built-in (Alison - Completed)
 *	Create a Schema.sql file (Eric - Completed)
 *	Build the database given the 'film_info.txt' in a new Ruby script (Eric - Completed)
-*	Build the database given the 'users.txt' in a new Ruby script (Alison)
+*	Build the database given the 'users.txt' in a new Ruby script (Alison - Completed)
 
 @TODO - Queries
 *	View movies by country
@@ -31,7 +31,19 @@ Data scrapped from IMDb using OMDb (http://www.omdbapi.com), users are currently
 *	Movie by rating?
 
 @TODO - Website
-*	Create a login system: store user/pass in db but hash pass 
-*	Create a login page
-*	Create a home page, recommends movies based on the user logged in 
-*	Create a user page/user 
+*	Create a login/sign-up page (ALISON)
+	*	Forms for logging in and signing up
+	*	Login form redirects registered users to home page
+	*	Sign up form registers valid users
+	*	Passwords will be stored as hashes
+*	Create a home page (ERIC)
+	*	Form that allows a user to query for stats based on the form input
+*	Create a review submission page 
+	*	Form allowing users to submit a new review
+*	Create a movie submission page (may not be needed)
+	*	Form allowing users to submit new movies
+*	Create a user page 
+	*	Listing of the table of that user's data and their reviews
+	*	Search tool for getting to other user's pages	
+*	Home page, user page for the logged-in user, and submission pages should be available via tabs
+*	Bootstrap front-end needs to be applied

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ "$1" == "-h" ]; then
-	echo "USAGE: ./init_db.sh <DATABASE FILE> <SCHEMA FILE>"
+	echo "USAGE: ./restart_db.sh <DATABASE FILE> <SCHEMA FILE>"
 	echo "Deletes the database file and rebuilds it using the schema."
 	exit 0
 fi
@@ -17,3 +17,4 @@ else
 fi
 
 rm $DATABASE && sqlite3 $DATABASE < $SCHEMA
+exit 0
