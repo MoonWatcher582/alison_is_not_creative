@@ -10,7 +10,9 @@ end
 USER_COLUMNS = "name, age, country, login_name, pass_hash"
 USER_TABLE = "users"
 
-def insert_vale(value, table, column)
+MOVIE_TABLE = "movies"
+
+def insert_value(value, table, column)
 	DB.run "INSERT INTO #{table} (#{column}) VALUES (#{value})" if not element_exists? value, table, column
 end
 
@@ -31,4 +33,11 @@ File.open(ARGV[0], 'r') do |user_info|
 		user_values = "'#{user[0]}', '#{user[1]}', '#{user[2]}', '#{user[3]}', '#{user[4]}'"
 	 DB.run "INSERT INTO #{USER_TABLE} (#{USER_COLUMNS}) VALUES (#{user_values})" if not element_exists? "'#{user[0]}'", USER_TABLE, "name"
 	end
-end	
+end
+
+File.open(ARGV[1], 'r') do |data|
+	data.each_line do |line|
+		relation = line.chomp.split(',')
+		DB.run "INSERT INTO movie_rating (user_id, film_id, rating) VALUES ( (SELECT m.id FROM #{USER_TABLE} m WHERE m.name = '#{relation[0]}'), (SELECT f.id FROM #{MOVIE_TABLE} f WHERE f.title = '#{relation[1]}'), #{relation[2]} )"
+	end
+end
