@@ -1,4 +1,5 @@
 require 'sequel'
+require 'bcrypt'
 
 if ARGV.length != 1 or ARGV[0] == '-h'
 	puts "USAGE: ruby db_builder_user_data.rb <user info file>"
@@ -30,7 +31,8 @@ File.open(ARGV[0], 'r') do |user_info|
 			puts "#{ARGV[0]}:#{idx}: Data malformed!"
 			return
 		end
-		user_values = "'#{user[0]}', '#{user[1]}', '#{user[2]}', '#{user[3]}', '#{user[4]}'"
+		pass = BCrypt::Password.create("#{user[4]}")
+		user_values = "'#{user[0]}', '#{user[1]}', '#{user[2]}', '#{user[3]}', '#{pass}'"
 	 DB.run "INSERT INTO #{USER_TABLE} (#{USER_COLUMNS}) VALUES (#{user_values})" if not element_exists? "'#{user[0]}'", USER_TABLE, "name"
 	end
 end
