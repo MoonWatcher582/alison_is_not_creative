@@ -89,6 +89,7 @@ class MyApp < Sinatra::Base
 =begin
 		ROUTES
 =end
+	# if warden cannot authenticate
 	post "/unauthenticated" do
 		redirect "/"
 	end
@@ -97,21 +98,44 @@ class MyApp < Sinatra::Base
 		redirect "/login"
 	end
 
+	# login + about page
 	get "/login" do
 		haml :login	
 	end
 
+	# login attempt
 	post "/session" do
 		warden_handler.authenticate!
 		if warden_handler.authenticated?
-			redirect "/secret"
+			redirect "/home"
 		else
 			redirect "/"
 		end
 	end
 
-	get "/secret" do
+	# home page (query form)
+	get "/home" do
 		"Ace!"
+	end
+
+	# make a query
+	post "/query" do
+
+	end
+
+	# submit review form
+	get "/submission" do
+
+	end
+
+	# submit review
+	post "/review" do
+
+	end
+
+	# user's page (review list)
+	get "/page" do
+
 	end
 
 	run! if __FILE__ == $0
