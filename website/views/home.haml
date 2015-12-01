@@ -1,0 +1,19 @@
+%h1 Is my project worth it?
+
+%p Enter the director for your movie, the actors you have for your movie (separated by newlines), the country producing your movie, or the country that is your intended audience.
+
+%form{ action: "/query", method: "POST" }
+  %legend TELL US ABOUT YOUR MOVIE:
+   Director:
+   %input{ name: "director" }
+   %br
+   Actors:
+   %input{ name: "actors", type: "text" }
+   %br
+   Producing Country
+   %input{ name: "country" }
+   %br
+   Audience Country
+   %input{ name: "audience" }
+   %br
+   %button{ type: "submit" } SUBMIT

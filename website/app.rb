@@ -90,52 +90,58 @@ class MyApp < Sinatra::Base
 		ROUTES
 =end
 	# if warden cannot authenticate
-	post "/unauthenticated" do
-		redirect "/"
+	post '/unauthenticated' do
+		redirect '/'
 	end
 
-	get "/" do
-		redirect "/login"
+	get '/' do
+		redirect '/login'
 	end
 
 	# login + about page
-	get "/login" do
+	get '/login' do
 		haml :login	
 	end
 
 	# login attempt
-	post "/session" do
+	post '/session' do
 		warden_handler.authenticate!
 		if warden_handler.authenticated?
-			redirect "/home"
+			redirect '/home'
 		else
-			redirect "/"
+			redirect '/'
 		end
 	end
 
 	# home page (query form)
-	get "/home" do
-		"Ace!"
+	get '/home' do
+		haml :home	
 	end
 
 	# make a query
-	post "/query" do
-
+	post '/query' do
+		# determine which inputs we have and which queries we can make
+		# make those queries
+		# do shit with the query data (graphs and stuff)
+		# display... somewhere
 	end
 
 	# submit review form
-	get "/submission" do
-
+	get '/submission' do
+		haml :submit
 	end
 
 	# submit review
-	post "/review" do
-
+	post '/review' do
+		# parse review data and extract currently logged in user
+		# call sql INSERT INTO
 	end
 
 	# user's page (review list)
-	get "/page" do
-
+	get '/page/:name' do |usrname|
+		# get user's data from DB
+		# get a list of user's reviews from DB
+		haml :user_page, :locals => {:usrname => usrname}
 	end
 
 	run! if __FILE__ == $0

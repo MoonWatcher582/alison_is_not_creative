@@ -1,11 +1,14 @@
 %h1 T H E M A G I C C O M P A S S
 
+%p Holding on to a script and a director or trying to get a project going with some actors, but scared the market won't take kindly to it?
+%p Using the Magic Compass, we'll compile statistics based on your upcoming project and give you the information you need to know if you should invest or continue.
+
 %form{ action: "/session", method: "POST" }
-  %legend LOG IN:
-  Username: 
-  %input{ name: "user"}
-  %br
-  Password: 
-  %input{ name: "pass" }
-  %br
-  %button{ type: "submit" } SUBMIT
+   %legend LOG IN:
+   Username: 
+   %input{ name: "user", required: true }
+   %br
+   Password: 
+   %input{ name: "pass", required: true }
+   %br
+   %button{ type: "submit" } SUBMIT
