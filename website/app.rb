@@ -1,7 +1,8 @@
+require 'bcrypt'
+require 'haml'
+require 'sequel'
 require 'sinatra/base'
 require 'sinatra/reloader'
-require 'sequel'
-require 'haml'
 require 'warden'
 
 class User
@@ -64,7 +65,7 @@ class MyApp < Sinatra::Base
 
 		def authenticate!
 			user = User.get_user_by_name(params["user"])
-			if user && user.authenticate(params["pass"])
+			if user && user.authenticate(BCrypt::Password.create(params["pass"]))
 				success!(user)
 			else	
 				fail!("Could not log in")
