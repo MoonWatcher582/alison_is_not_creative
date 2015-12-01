@@ -1,10 +1,9 @@
 --What genres will do well in certain countries? (Country is intended audience)
 SELECT g.genre, AVG(r.rating)
-FROM movies m, movie_ratings r, genres g, is_genre ig, users u
+FROM movie_ratings r, genres g, is_genre ig, users u
 WHERE u.country = ?
-	AND m.id = r.film_id
 	AND ig.genre_id = g.id
-	AND m.id = ig.film_id
+	AND r.film_id = ig.film_id
 GROUP BY r.film_id
 ORDER BY ig.genre_id;
 
@@ -38,14 +37,25 @@ ORDER BY u.country;
 
 --Are movies better when certain directors work with certain actors?
 --Are two movies where the director and actor work together better than the director's avg rating
+SELECT CASE WHEN (
+	SELECT AVG(r.rating) 
+	FROM movie_ratings r, directed_by d, acted_in a
+	WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1)
+		AND a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1)
+		AND d.film_id = r.film_d
+		AND a.film_id = d.film_id) a1 > (
+	SELECT AVG(r.rating)
+	FROM movie_ratings r, directed_by d
+	WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1)
+		AND d.film_id = r.film_id) a2
+THEN 'true' ELSE 'false' END AS together;
 
 --Are movies better when certain directors make movies of certain genres?
 SELECT g.genre, AVG(r.rating) 
-FROM movies m, movie_ratings r, directed_by d, is_genre ig, genres g
+FROM movie_ratings r, directed_by d, is_genre ig, genres g
 WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1)
-	AND m.id = d.film_id
-	AND m.id = r.film_id
-	AND m.id = ig.film_id
+	AND r.film_id = d.film_id
+	AND r.film_id = ig.film_id
 	AND ig.genre_id = g.id
 GROUP BY ig.genre_id
 ORDER BY ig.genre_id;
@@ -72,20 +82,18 @@ ORDER BY m.year;
 
 --Do actors do better in certain genres?
 SELECT g.genre, AVG(r.rating) 
-FROM movies m, movie_ratings r, acted_in a, is_genre ig, genres g
+FROM movie_ratings r, acted_in a, is_genre ig, genres g
 WHERE a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1)
-	AND m.id = a.film_id
-	AND m.id = r.film_id
-	AND m.id = ig.film_id
+	AND r.film_id = a.film_id
+	AND r.film_id = ig.film_id
 	AND ig.genre_id = g.id
 GROUP BY ig.genre_id
 ORDER BY ig.genre_id;
 
 --Are actors received better in certain countries?
 SELECT u.country, AVG(r.rating)
-FROM movies m, movie_ratings r, acted_in a
+FROM movie_ratings r, acted_in a
 WHERE a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1)
-	AND m.id = a.film_id
-	AND m.id = r.film_id
+	AND r.film_id = a.film_id
 GROUP BY u.country
 ORDER BY u.country;
