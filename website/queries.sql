@@ -6,7 +6,7 @@ FROM movie_rating r, genres g, is_genre ig, users u
 WHERE u.country = ?
 	AND ig.genre_id = g.id
 	AND r.film_id = ig.film_id
-GROUP BY r.film_id
+GROUP BY ig.genre_id
 ORDER BY ig.genre_id;
 
 --COUNTRY
@@ -17,7 +17,8 @@ FROM (
 	SELECT m.title, AVG(r.rating) a
 	FROM movies m, movie_rating r
 	WHERE m.country = ?
-		AND m.id = r.film_id) c
+		AND m.id = r.film_id
+	GROUP BY m.id) c
 WHERE c.a >= 3.5
 
 SELECT COUNT(c.a)
@@ -25,7 +26,8 @@ FROM (
 	SELECT m.title, AVG(r.rating) a
 	FROM movies m, movie_rating r
 	WHERE m.country = ?
-		AND m.id = r.film_id) c
+		AND m.id = r.film_id
+	GROUP BY m.id) c
 WHERE c.a < 3.5
 
 --Your country's movies are liked by what other country?
@@ -41,22 +43,24 @@ ORDER BY u.country;
 
 --Are movies better when certain directors work with certain actors?
 --Are two movies where the director and actor work together better than the director's avg rating
-SELECT CASE WHEN (
-	SELECT AVG(r.rating) 
+SELECT CASE WHEN a1.a > a2.a
+	THEN 'true'
+	ELSE 'false'
+END
+FROM
+	(SELECT AVG(r.rating) a
 	FROM movie_rating r, directed_by d, acted_in a
 	WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1)
 		AND a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1)
-		AND d.film_id = r.film_d
-		AND a.film_id = d.film_id) a1 > (
-	SELECT AVG(r.rating)
+		AND d.film_id = r.film_id
+		AND a.film_id = d.film_id) a1,
+	(SELECT AVG(r.rating) a
 	FROM movie_rating r, directed_by d
 	WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1)
-		AND d.film_id = r.film_id) a2
-THEN 'true' ELSE 'false' END AS together;
+		AND d.film_id = r.film_id) a2;
 
 --DIRECTOR
 
---GOOD
 --Are movies better when certain directors make movies of certain genres?
 SELECT g.genre, AVG(r.rating) 
 FROM movie_rating r, directed_by d, is_genre ig, genres g
@@ -67,7 +71,6 @@ WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1)
 GROUP BY ig.genre_id
 ORDER BY ig.genre_id;
 
---GOOD
 --Do director careers get better or worse with time?
 --ORDER BY defaults to ascending
 --Graph the results and let the user decide???
@@ -100,10 +103,12 @@ WHERE a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1)
 GROUP BY ig.genre_id
 ORDER BY ig.genre_id;
 
+
 --Are actors received better in certain countries?
 SELECT u.country, AVG(r.rating)
-FROM movie_rating r, acted_in a
+FROM movie_rating r, acted_in a, users u
 WHERE a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1)
 	AND r.film_id = a.film_id
+	AND r.user_id = u.id
 GROUP BY u.country
 ORDER BY u.country;

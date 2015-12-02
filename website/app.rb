@@ -143,28 +143,28 @@ THRESHOLD = "3.5"
 		# determine which inputs we have and which queries we can make
 		
 		if params["director"].present? && params["actor"].present?
-			#director_and_actor = $DB.fetch("SELECT CASE WHEN (SELECT AVG(r.rating) FROM movie_rating r, directed_by d, acted_in a WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1) AND a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1) AND d.film_id = r.film_id AND a.film_id = d.film_id) a1 > (SELECT AVG(r.rating) FROM movie_rating r, directed_by d WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1) AND d.film_id = r.film_id) a2 THEN 'true' ELSE 'false' END AS together;", params["director"], params["actor"], params["director"])
+			director_and_actor = $DB.fetch("SELECT CASE WHEN a1.a > a2.a THEN 'true' ELSE 'false' END FROM (SELECT AVG(r.rating) a FROM movie_rating r, directed_by d, acted_in a WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1) AND a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1) AND d.film_id = r.film_id AND a.film_id = d.film_id) a1, (SELECT AVG(r.rating) a FROM movie_rating r, directed_by d WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1) AND d.film_id = r.film_id) a2;", params["director"], params["actor"], params["director"])
 		end
 
 		if params["director"].present?
-			#director_by_genres = $DB.fetch("SELECT g.genre, AVG(r.rating) FROM movie_rating r, directed_by d, is_genre ig, genres g WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1) AND r.film_id = d.film_id AND r.film_id = ig.film_id AND ig.genre_id = g.id GROUP BY ig.genre_id ORDER BY ig.genre_id;", params["director"])	
-			#director_by_time = $DB.fetch("SELECT m.title, m.year, AVG(r.rating) FROM movies m, movie_rating r, directed_by d WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1) AND m.id = d.film_id AND m.id = r.film_id GROUP BY r.film_id ORDER BY m.year;", params["director"])
+			director_by_genres = $DB.fetch("SELECT g.genre, AVG(r.rating) FROM movie_rating r, directed_by d, is_genre ig, genres g WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1) AND r.film_id = d.film_id AND r.film_id = ig.film_id AND ig.genre_id = g.id GROUP BY ig.genre_id ORDER BY ig.genre_id;", params["director"])	
+			director_by_time = $DB.fetch("SELECT m.title, m.year, AVG(r.rating) FROM movies m, movie_rating r, directed_by d WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1) AND m.id = d.film_id AND m.id = r.film_id GROUP BY r.film_id ORDER BY m.year;", params["director"])
 		end
 
 		if params["actor"].present?
-			#actor_by_time = $DB.fetch("SELECT m.title, m.year, AVG(r.rating) FROM movies m, movie_rating r, acted_in a WHERE a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1) AND m.id = a.film_id AND m.id = r.film_id GROUP BY r.film_id ORDER BY m.year;", params["actor"])
-			#actor_by_genres = $DB.fetch("SELECT g.genre, AVG(r.rating) FROM movie_rating r, acted_in a, is_genre ig, genres g WHERE a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1) AND r.film_id = a.film_id AND r.film_id = ig.film_id AND ig.genre_id = g.id GROUP BY ig.genre_id ORDER BY ig.genre_id;", params["actor"])
-			#actor_by_country = $DB.fetch("SELECT u.country, AVG(r.rating) FROM movie_rating r, acted_in a WHERE a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1) AND r.film_id = a.film_id GROUP BY u.country ORDER BY u.country;", params["actor"])
+			actor_by_time = $DB.fetch("SELECT m.title, m.year, AVG(r.rating) FROM movies m, movie_rating r, acted_in a WHERE a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1) AND m.id = a.film_id AND m.id = r.film_id GROUP BY r.film_id ORDER BY m.year;", params["actor"])
+			actor_by_genres = $DB.fetch("SELECT g.genre, AVG(r.rating) FROM movie_rating r, acted_in a, is_genre ig, genres g WHERE a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1) AND r.film_id = a.film_id AND r.film_id = ig.film_id AND ig.genre_id = g.id GROUP BY ig.genre_id ORDER BY ig.genre_id;", params["actor"])
+			actor_by_country = $DB.fetch("SELECT u.country, AVG(r.rating) FROM movie_rating r, acted_in a, users u WHERE a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1) AND r.film_id = a.film_id AND r.user_id = u.id GROUP BY u.country ORDER BY u.country;", params["actor"])
 		end
 
 		if params["country"].present?
-			#who_likes_our_movies = $DB.fetch("SELECT u.country, AVG(r.rating) FROM movies m, movie_rating r, users u WHERE m.country = ? AND m.id = r.film_id AND r.user_id = u.id GROUP BY u.country ORDER BY u.country;", params["country"])
-			#country_good_movies = $DB.fetch("SELECT COUNT(c.a) FROM (SELECT AVG(r.rating) a FROM movies m, movie_rating r WHERE m.country = ? AND m.id = r.film_id) c WHERE c.a >= #{THRESHOLD}", params["country"])
-			#country_bad_movies = $DB.fetch("SELECT COUNT(c.a) FROM (SELECT AVG(r.rating) a FROM movies m, movie_rating r WHERE m.country = ? AND m.id = r.film_id) c WHERE c.a < #{THRESHOLD}", params["country"])
+			who_likes_our_movies = $DB.fetch("SELECT u.country, AVG(r.rating) FROM movies m, movie_rating r, users u WHERE m.country = ? AND m.id = r.film_id AND r.user_id = u.id GROUP BY u.country ORDER BY u.country;", params["country"])
+			country_good_movies = $DB.fetch("SELECT COUNT(c.a) FROM (SELECT AVG(r.rating) a FROM movies m, movie_rating r WHERE m.country = ? AND m.id = r.film_id GROUP BY m.id) c WHERE c.a >= #{THRESHOLD};", params["country"])
+			country_bad_movies = $DB.fetch("SELECT COUNT(c.a) FROM (SELECT AVG(r.rating) a FROM movies m, movie_rating r WHERE m.country = ? AND m.id = r.film_id GROUP BY m.id) c WHERE c.a < #{THRESHOLD};", params["country"])
 		end
 
 		if params["audience"].present?
-			#genres_by_audience = $DB.fetch("SELECT g.genre, AVG(r.rating) FROM movie_rating r, genres g, is_genre ig, users u WHERE u.country = ? AND ig.genre_id = g.id AND r.film_id = ig.film_id GROUP BY r.film_id ORDER BY ig.genre_id;", params["audience"])
+			genres_by_audience = $DB.fetch("SELECT g.genre, AVG(r.rating) FROM movie_rating r, genres g, is_genre ig, users u WHERE u.country = ? AND ig.genre_id = g.id AND r.film_id = ig.film_id GROUP BY ig.genre_id ORDER BY ig.genre_id;", params["audience"])
 		end
 	end
 
