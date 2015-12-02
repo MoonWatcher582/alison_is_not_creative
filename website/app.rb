@@ -4,21 +4,18 @@ require 'sequel'
 require 'sinatra/base'
 require 'sinatra/reloader'
 require 'warden'
+require 'pry'
 
 class User
 
-	attr_reader :id, :name, :pass
+	attr_reader :id, :name, :username, :pass
 
-	@@DB = Sequel.connect('sqlite://users.db')
+	@@DB = Sequel.connect('sqlite://movies.db')
 
-	def initialize(id, name, pass)
+	def initialize(id, name, username)
 		@id = id
 		@name = name
-		@pass = pass
-	end
-
-	def authenticate(pass)
-		@pass == pass
+		@username = username
 	end
 
 	def self.get_user_by_id(id)
@@ -29,10 +26,13 @@ class User
 		get_user("name", name)
 	end
 
+	def self.get_user_by_username(usrname)
+		get_user("login_name", usrname)
+	end
+
 	def self.get_user(column, input)
-		@@DB.fetch("SELECT id, name, pass FROM user WHERE #{column} = '#{input}'") do |row|
-			user = User.new(row[:id], row[:name], row[:pass])
-			return user
+		@@DB.fetch("SELECT id, name, login_name FROM users WHERE #{column} = '#{input}'") do |row|
+			return User.new(row[:id], row[:name], row[:login_name])
 		end
 	end
 end
@@ -64,10 +64,13 @@ class MyApp < Sinatra::Base
 		end
 
 		def authenticate!
-			user = User.get_user_by_name(params["user"])
-			if user && user.authenticate(BCrypt::Password.create(params["pass"]))
+			puts "USERNAME: #{params["user"]}"
+			user = User.get_user_by_username(params["user"])
+			if user
+				puts "Login yaaas"
 				success!(user)
 			else	
+				puts "nologin boooo"
 				fail!("Could not log in")
 			end
 		end
@@ -116,7 +119,8 @@ class MyApp < Sinatra::Base
 
 	# home page (query form)
 	get '/home' do
-		haml :home	
+		check_authentication
+		haml :home, :locals => {usrname: current_user.username}	
 	end
 
 	# make a query
@@ -142,7 +146,12 @@ class MyApp < Sinatra::Base
 	get '/page/:name' do |usrname|
 		# get user's data from DB
 		# get a list of user's reviews from DB
-		haml :user_page, :locals => {:usrname => usrname}
+		haml :user_page, :locals => {usrname: usrname}
+	end
+
+	get "/logout" do
+		warden_handler.logout
+		redirect "/login"
 	end
 
 	run! if __FILE__ == $0
