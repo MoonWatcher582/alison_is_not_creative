@@ -1,0 +1,10 @@
+%h1 USER INFORMATION
+
+%p Username: #{usrname}
+%p Name: #{name}
+%p Age: #{age}
+%p Country: #{country}
+
+%p Ratings: 
+- reviews.each do |review|
+  %p #{review[:title]} : #{review[:rating]}
