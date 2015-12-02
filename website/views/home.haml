@@ -6,7 +6,7 @@
 
 %h1 Is my project worth it?
 
-%p Enter the director for your movie, the actors you have for your movie (separated by newlines), the country producing your movie, or the country that is your intended audience.
+%p Enter the director for your movie, an actor you have for your movie (only one per query please), the country producing your movie, or the country that is your intended audience.
 
 %form{ action: "/query", method: "POST" }
    %legend TELL US ABOUT YOUR MOVIE:
@@ -14,7 +14,7 @@
    %input{ name: "director" }
    %br
    Actors:
-   %input{ name: "actors", type: "text" }
+   %input{ name: "actor" }
    %br
    Producing Country
    %input{ name: "country" }
