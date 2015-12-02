@@ -211,7 +211,7 @@ THRESHOLD = "3.5"
 		# get a list of user's reviews from DB
 		reviews = $DB.fetch("SELECT m.title, r.rating FROM movies m, movie_rating r WHERE m.id = r.film_id AND r.user_id = ?;", id) 
 
-		haml :user_page, :locals => {usrname: usrname, name: name, age: age, country: country, reviews: reviews}
+		haml :user_page, :locals => {pagename: usrname, name: name, age: age, country: country, reviews: reviews, usrname: current_user.username}
 	end
 
 	get "/logout" do
