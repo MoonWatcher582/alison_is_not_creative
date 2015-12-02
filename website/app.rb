@@ -171,7 +171,7 @@ THRESHOLD = "3.5"
 	# submit review form
 	get '/submission' do
 		check_authentication
-		haml :submit, :locals => {msg: "", status: "success"}
+		haml :submit, :locals => {msg: "", status: "success", usrname: current_user.username}
 	end
 
 	# submit review
