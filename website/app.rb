@@ -31,7 +31,7 @@ class User
 	end
 
 	def self.get_user(column, input)
-		@@DB.fetch("SELECT id, name, login_name FROM users WHERE #{column} = '#{input}'") do |row|
+		@@DB.fetch("SELECT id, name, login_name FROM users WHERE #{column} = ? LIMIT 1", input) do |row|
 			return User.new(row[:id], row[:name], row[:login_name])
 		end
 	end
@@ -64,13 +64,10 @@ class MyApp < Sinatra::Base
 		end
 
 		def authenticate!
-			puts "USERNAME: #{params["user"]}"
 			user = User.get_user_by_username(params["user"])
 			if user
-				puts "Login yaaas"
 				success!(user)
 			else	
-				puts "nologin boooo"
 				fail!("Could not log in")
 			end
 		end
@@ -89,6 +86,11 @@ class MyApp < Sinatra::Base
 	def current_user
 		warden_handler.user
 	end
+
+=begin
+	Database
+=end
+$DB = Sequel.connect('sqlite://movies.db')
 
 =begin
 		ROUTES
@@ -145,8 +147,17 @@ class MyApp < Sinatra::Base
 	# user's page (review list)
 	get '/page/:name' do |usrname|
 		# get user's data from DB
+		puts "USERNAME: #{usrname}"
+		id = '', name = '', age = '', country = ''
+		$DB.fetch("SELECT id, name, age, country FROM users WHERE login_name = ? LIMIT 1", usrname) do |row|
+			id = row[:id]
+			name = row[:name]
+			age = row[:age]
+			country = row[:country]
+		end
+		reviews = $DB.fetch("SELECT m.name, r.rating FROM movies m, movie_ratings r WHERE m.id = r.film_id AND r.user_id = ?", id) 
 		# get a list of user's reviews from DB
-		haml :user_page, :locals => {usrname: usrname}
+		haml :user_page, :locals => {usrname: usrname, name: name, age: age, country: country, reviews: reviews}
 	end
 
 	get "/logout" do
