@@ -6,6 +6,17 @@ require 'sinatra/reloader'
 require 'warden'
 require 'pry'
 
+
+class Object
+	def blank?
+		respond_to?(:empty?) ? !!empty? : !self
+	end
+
+	def present?
+		!blank?
+	end
+end
+
 class User
 
 	attr_reader :id, :name, :username, :pass
@@ -129,9 +140,21 @@ $DB = Sequel.connect('sqlite://movies.db')
 	post '/query' do
 		check_authentication
 		# determine which inputs we have and which queries we can make
-		# make those queries
-		# do shit with the query data (graphs and stuff)
-		# display... somewhere
+		if params["director"].present?
+
+		end
+
+		if params["actors"].present?
+
+		end
+
+		if params["country"].present?
+
+		end
+
+		if params["audience"].present?
+
+		end
 	end
 
 	# submit review form
