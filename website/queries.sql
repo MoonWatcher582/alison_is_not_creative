@@ -14,7 +14,7 @@ ORDER BY ig.genre_id;
 --How many movies has a country produced that have good or bad ratings? (Country is producer)
 SELECT COUNT(c.a)
 FROM (
-	SELECT m.name, AVG(r.rating) a
+	SELECT m.title, AVG(r.rating) a
 	FROM movies m, movie_rating r
 	WHERE m.country = ?
 		AND m.id = r.film_id) c
@@ -22,7 +22,7 @@ WHERE c.a >= 3.5
 
 SELECT COUNT(c.a)
 FROM ( 
-	SELECT m.name, AVG(r.rating) a
+	SELECT m.title, AVG(r.rating) a
 	FROM movies m, movie_rating r
 	WHERE m.country = ?
 		AND m.id = r.film_id) c
@@ -56,6 +56,7 @@ THEN 'true' ELSE 'false' END AS together;
 
 --DIRECTOR
 
+--GOOD
 --Are movies better when certain directors make movies of certain genres?
 SELECT g.genre, AVG(r.rating) 
 FROM movie_rating r, directed_by d, is_genre ig, genres g
@@ -66,10 +67,11 @@ WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1)
 GROUP BY ig.genre_id
 ORDER BY ig.genre_id;
 
+--GOOD
 --Do director careers get better or worse with time?
 --ORDER BY defaults to ascending
 --Graph the results and let the user decide???
-SELECT m.name, m.year, AVG(r.rating) 
+SELECT m.title, m.year, AVG(r.rating) 
 FROM movies m, movie_rating r, directed_by d
 WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1)
 	AND m.id = d.film_id
@@ -80,7 +82,7 @@ ORDER BY m.year;
 --ACTOR
 
 --Do actor careers get better or worse by time?
-SELECT m.name, m.year, AVG(r.rating) 
+SELECT m.title, m.year, AVG(r.rating) 
 FROM movies m, movie_rating r, acted_in a
 WHERE a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1)
 	AND m.id = a.film_id
