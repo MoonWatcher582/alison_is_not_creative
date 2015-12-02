@@ -1,11 +1,13 @@
 %h1 REVIEW SUBMISSION
 
+%p{ name: "result", id: "#{status}" } #{msg}
+
 %form{ action: "/review", method: "POST" }
    %legend Submit a new review:
    Movie Title:
    %input{ name: "movie_title", required: true }
    %br
    Rating:
-   %input{ name: "rating", type: "number", step: "any", required: true}
+   %input{ name: "rating", type: "number", min: "1", max: "5", required: true }
    %br
    %button{ type: "submit" } SUBMIT

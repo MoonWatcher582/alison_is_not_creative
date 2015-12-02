@@ -31,7 +31,7 @@ class User
 	end
 
 	def self.get_user(column, input)
-		@@DB.fetch("SELECT id, name, login_name FROM users WHERE #{column} = ? LIMIT 1", input) do |row|
+		@@DB.fetch("SELECT id, name, login_name FROM users WHERE #{column} = ? LIMIT 1;", input) do |row|
 			return User.new(row[:id], row[:name], row[:login_name])
 		end
 	end
@@ -127,6 +127,7 @@ $DB = Sequel.connect('sqlite://movies.db')
 
 	# make a query
 	post '/query' do
+		check_authentication
 		# determine which inputs we have and which queries we can make
 		# make those queries
 		# do shit with the query data (graphs and stuff)
@@ -135,28 +136,47 @@ $DB = Sequel.connect('sqlite://movies.db')
 
 	# submit review form
 	get '/submission' do
-		haml :submit
+		check_authentication
+		haml :submit, :locals => {msg: "", status: "success"}
 	end
 
 	# submit review
-	post '/review' do
+	post '/review' do	
+		check_authentication
 		# parse review data and extract currently logged in user
+		film_id = nil
+		$DB.fetch("SELECT id FROM movies WHERE title = ? LIMIT 1;", params["movie_title"]) do |row|
+			film_id = row[:id]
+		end
+
 		# call sql INSERT INTO
+		msg = nil, status = nil
+		if film_id == nil
+			msg = "Movie not found!"
+			status = "error"
+		else
+			$DB["INSERT INTO movie_rating VALUES(NULL, ?, ?, ?);", params["rating"], current_user.id, film_id]
+			msg = "Successfully added new rating!"
+			status = "success"
+		end
+		haml :submit, :locals => {msg: msg, status: status} 
 	end
 
 	# user's page (review list)
 	get '/page/:name' do |usrname|
+		check_authentication
 		# get user's data from DB
-		puts "USERNAME: #{usrname}"
-		id = '', name = '', age = '', country = ''
-		$DB.fetch("SELECT id, name, age, country FROM users WHERE login_name = ? LIMIT 1", usrname) do |row|
+		id = nil, name = nil, age = nil, country = nil
+		$DB.fetch("SELECT id, name, age, country FROM users WHERE login_name = ? LIMIT 1;", usrname) do |row|
 			id = row[:id]
 			name = row[:name]
 			age = row[:age]
 			country = row[:country]
 		end
-		reviews = $DB.fetch("SELECT m.name, r.rating FROM movies m, movie_ratings r WHERE m.id = r.film_id AND r.user_id = ?", id) 
+
 		# get a list of user's reviews from DB
+		reviews = $DB.fetch("SELECT m.name, r.rating FROM movies m, movie_ratings r WHERE m.id = r.film_id AND r.user_id = ?;", id) 
+
 		haml :user_page, :locals => {usrname: usrname, name: name, age: age, country: country, reviews: reviews}
 	end
 
