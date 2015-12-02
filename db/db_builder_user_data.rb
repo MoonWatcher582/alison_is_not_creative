@@ -18,7 +18,6 @@ def insert_value(value, table, column)
 end
 
 def element_exists?(value, table, column)
-	puts "SELECT * FROM #{table} WHERE #{column} = #{value.chomp}"
 	DB["SELECT * FROM #{table} WHERE #{column} = #{value.chomp}"].count > 0
 end
 
