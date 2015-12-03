@@ -1,0 +1,5 @@
+:host: myHost 
+:port: myPort
+:database: myDatabase
+:username: myUsername
+:password: myPassword

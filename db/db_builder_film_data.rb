@@ -1,4 +1,6 @@
+require 'mysql2'
 require 'sequel'
+require 'yaml'
 
 if ARGV.length != 4 or ARGV[0] == '-h'
 	puts "USAGE: ruby db_builder.rb <film info file> <genre relation file> <director relation file> <actor relation file>"
@@ -60,7 +62,8 @@ end
 	Open database connection
 	sqlite3 and sequel gems required, as well as yum's sqlite3-devel
 =end
-DB = Sequel.connect('sqlite://movies.db')
+yamlfile = YAML.load(open('../website/config/database.yml'))
+DB = Sequel.connect(database: yamlfile[:database], user: yamlfile[:username], password: yamlfile[:password], host: yamlfile[:host], port: yamlfile[:host], adapter: 'mysql2') 
 
 #	Look at each line in the file and insert movie into database 
 puts "Parsing and inserting from #{ARGV[0]}"
