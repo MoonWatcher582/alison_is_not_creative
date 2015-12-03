@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+gem 'bcrypt'
+gem 'gchartrb'
+gem 'haml'
+gem 'pry'
+gem 'sequel'
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'sinatra-warden'
