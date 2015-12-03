@@ -26,7 +26,7 @@ CREATE TABLE directors(
 CREATE TABLE users(
 	id             INTEGER PRIMARY KEY AUTO_INCREMENT,
 	name           VARCHAR(255) NOT NULL,
-	age				INTEGER NOT NULL,
+	age				TINYINT NOT NULL,
 	country        VARCHAR(100) NOT NULL,
 	login_name     VARCHAR(255) UNIQUE NOT NULL,
 	pass_hash      VARCHAR(255) NOT NULL
@@ -62,14 +62,14 @@ CREATE TABLE acted_in(
  *	The relationship for worked_with can be
  *	easily be accessed from other tables.
  */
-CREATE VIEW [worked_with] AS
+CREATE VIEW worked_with AS
 	SELECT DISTINCT d.director_id, a.actor_id
 		FROM directed_by d, acted_in a
 		WHERE d.film_id = a.film_id;
 
 CREATE TABLE movie_rating(
 	id       INTEGER PRIMARY KEY AUTO_INCREMENT,
-	rating	NUMBER NOT NULL,
+	rating	TINYINT NOT NULL,
 	user_id  INTEGER NOT NULL,
 	film_id  INTEGER NOT NULL,
 	FOREIGN KEY(user_id) REFERENCES users(id),
