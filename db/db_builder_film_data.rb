@@ -63,7 +63,7 @@ end
 	sqlite3 and sequel gems required, as well as yum's sqlite3-devel
 =end
 yamlfile = YAML.load(open('../website/config/database.yml'))
-DB = Sequel.connect(database: yamlfile[:database], user: yamlfile[:username], password: yamlfile[:password], host: yamlfile[:host], port: yamlfile[:host], adapter: 'mysql2') 
+DB = Sequel.connect(database: yamlfile[:database], user: yamlfile[:username], password: yamlfile[:password], host: yamlfile[:host], port: yamlfile[:port], adapter: 'mysql2') 
 
 #	Look at each line in the file and insert movie into database 
 puts "Parsing and inserting from #{ARGV[0]}"

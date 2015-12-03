@@ -1,12 +1,14 @@
 require 'bcrypt'
+require 'google_chart'
 require 'haml'
+require 'mysql2'
+require 'pry'
+require 'rubygems'
 require 'sequel'
 require 'sinatra/base'
 require 'sinatra/reloader'
 require 'warden'
-require 'pry'
-require 'rubygems'
-require 'google_chart'
+require 'yaml'
 
 class Object
 	def blank?
@@ -22,7 +24,8 @@ class User
 
 	attr_reader :id, :name, :username, :pass
 
-	@@DB = Sequel.connect('sqlite://movies.db')
+	yamlfile = YAML.load(open('./config/database.yml'))
+	@@DB = Sequel.connect(database: yamlfile[:database], user: yamlfile[:username], password: yamlfile[:password], host: yamlfile[:host], port: yamlfile[:port], adapter: 'mysql2')
 
 	def initialize(id, name, username)
 		@id = id
@@ -102,7 +105,8 @@ class MyApp < Sinatra::Base
 =begin
 	Database and constants
 =end
-$DB = Sequel.connect('sqlite://movies.db')
+yamlfile = YAML.load(open('./config/database.yml'))
+$DB = Sequel.connect(database: yamlfile[:database], user: yamlfile[:username], password: yamlfile[:password], host: yamlfile[:host], port: yamlfile[:port], adapter: 'mysql2')
 THRESHOLD = "3.5"
 
 =begin
