@@ -1,0 +1,71 @@
+%h1 RESULTS
+
+// No inputs were given
+- if director_and_actor == nil && director_by_genres == nil && director_by_time == nil && actor_by_time == nil && actor_by_genres == nil && actor_by_country == nil && who_likes_our_movies == nil && num_good_movies_by_country == nil && num_bad_movies_by_country == nil && genres_by_audience == nil && director_graph_url == nil && actor_graph_url == nil
+  %p No inputs were given.
+  %button{ type: "submit" } SUBMIT
+  %a{ href: "/home" } Go back.
+
+// A director has been enetered.
+- if director_by_genres != nil
+  %h2 Director: #{director}
+  %h3 Average Ratings for #{director} in Each Genre:
+  - director_by_genres.each do |genre|
+    %p Genre: #{genre[:genre]} || Avg Rating: #{genre[:a]}
+
+- if director_by_time != nil
+  %h3 Average Ratings for #{director} Throughout the Years:
+  - director_by_time.each do |item|
+    %p Movie: #{item[:title]} || Year: #{item[:year]} || Avg Rating: #{item[:a]}
+
+// Show graph for director.
+- if director_graph_url != nil
+  %img{:src => "#{director_graph_url}"} 
+
+
+// An actor has been entered.
+- if actor_by_genres != nil
+  %h2 Actor: #{actor}
+  %h3 Average Ratings in for #{actor} in Each Genre:
+  - actor_by_genres.each do |genre|
+    %p Genre: #{genre[:genre]} || Avg Rating: #{genre[:a]}
+
+- if actor_by_country != nil
+  %h3 Average Ratings in Countries for Movies #{actor} Acted in:
+  - actor_by_country.each do |item|
+    %p Country: #{item[:country]} || Avg Rating: #{item[:a]}
+
+- if actor_by_time != nil
+  %h3 Average Ratings for #{actor} Throughout the Years:
+  - actor_by_time.each do |item|
+    %p Movie: #{item[:title]} || Year: #{item[:year]} || Avg Rating: #{item[:a]}
+
+// Show graph for actor.
+- if actor_graph_url != nil
+  %img{:src => "#{actor_graph_url}"} 
+
+// A director and an actor have been entered.
+- if director_and_actor != nil
+  %h2 Conclusion:
+  - if director_and_actor == true
+    %p Your movie will benefit if #{actor} and #{director} work together.
+  - else
+    %p Your movie will not benefit if #{actor} and #{director} work together.
+
+// A producing country was entered.
+- if who_likes_our_movies != nil
+  %h2 Country: #{country}
+  %h3 Average Rating From Each Country:
+  - who_likes_our_movies.each do |item|
+    %p Country: #{item[:country]} || Avg Rating: #{item[:a]}
+- if num_good_movies_by_country != nil
+  %h4 Number of Good Movies Produced by #{country}: [#{num_good_movies_by_country}]
+- if num_bad_movies_by_country != nil
+  %h4 Number of Bad Movies Produced by #{country}: [#{num_bad_movies_by_country}]
+
+// An audience country was entered.A
+- if genres_by_audience != nil
+  %h2 Audience: #{audience}
+  %h3 Average Ratings in #{audience}:
+  - genres_by_audience.each do |item|
+    %p Genre: #{item[:genre]} || Avg Rating: #{item[:a]}

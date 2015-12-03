@@ -5,7 +5,8 @@ require 'sinatra/base'
 require 'sinatra/reloader'
 require 'warden'
 require 'pry'
-
+require 'rubygems'
+require 'google_chart'
 
 class Object
 	def blank?
@@ -150,8 +151,12 @@ THRESHOLD = "3.5"
 		actor_by_country = nil
 		who_likes_our_movies = nil
 		num_country_good_movies = nil
+		good_movies = nil
 		num_country_bad_movies = nil
+		bad_movies = nil
 		genres_by_audience = nil
+		director_graph_url = nil
+		actor_graph_url = nil
 
 		# determine which inputs we have and which queries we can make
 		if params["director"].present? && params["actor"].present?
@@ -168,11 +173,13 @@ THRESHOLD = "3.5"
 
 			# returns (movie, year) => average rating for a director's filmography; we should graph this or show it raw
 			director_by_time = $DB.fetch("SELECT m.title, m.year, AVG(r.rating) a FROM movies m, movie_rating r, directed_by d WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1) AND m.id = d.film_id AND m.id = r.film_id GROUP BY r.film_id ORDER BY m.year;", params["director"])
+		director_graph_url = make_graph(director_by_time, params["director"])
 		end
 
 		if params["actor"].present?
 			# returns (movie, year) => average rating for an actor's filmography; we should graph this or show it raw
 			actor_by_time = $DB.fetch("SELECT m.title, m.year, AVG(r.rating) a FROM movies m, movie_rating r, acted_in a WHERE a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1) AND m.id = a.film_id AND m.id = r.film_id GROUP BY r.film_id ORDER BY m.year;", params["actor"])
+			actor_graph_url = make_graph(actor_by_time, params["actor"])
 
 			# returns genre => average rating for an actor's filmography; we can show the user which of these averages are greater than the threshold, these are their strengths
 			actor_by_genres = $DB.fetch("SELECT g.genre, AVG(r.rating) a FROM movie_rating r, acted_in a, is_genre ig, genres g WHERE a.actor_id = (SELECT id FROM actors WHERE name = ? LIMIT 1) AND r.film_id = a.film_id AND r.film_id = ig.film_id AND ig.genre_id = g.id GROUP BY ig.genre_id ORDER BY ig.genre_id;", params["actor"])
@@ -206,7 +213,7 @@ THRESHOLD = "3.5"
 		# massage query results so we can send them to the website
 		
 		# render website
-		haml :results, :locals => {director_and_actor: director_and_actor, director_by_genres: director_by_genres, director_by_time: director_by_time, actor_by_time: actor_by_time, actor_by_genres: actor_by_genres, actor_by_country: actor_by_country, who_likes_our_movies: who_likes_our_movies, num_good_movies_by_country: good_movies, num_bad_movies_by_country: bad_movies, genres_by_audience: genres_by_audience}
+		haml :results, :locals => {director: params["director"], actor: params["actor"], audience: params["audience"], country: params["country"], actor_graph_url: actor_graph_url, director_graph_url: director_graph_url, director_and_actor: director_and_actor, director_by_genres: director_by_genres, director_by_time: director_by_time, actor_by_time: actor_by_time, actor_by_genres: actor_by_genres, actor_by_country: actor_by_country, who_likes_our_movies: who_likes_our_movies, num_good_movies_by_country: good_movies, num_bad_movies_by_country: bad_movies, genres_by_audience: genres_by_audience}
 	end
 
 	# submit review form
@@ -261,4 +268,36 @@ THRESHOLD = "3.5"
 	end
 
 	run! if __FILE__ == $0
+end
+
+# Producing Graph URL
+def make_graph(info, name)
+#	test = [[0,0], [1992,3.3076923076923075], [1994,2.7777777777777777], [1997,2.8125], [2003,3.5454545454545454], [2004,2.8333333333333335], [2007,2.8181818181818183], [2009,2.76], [2012,3.4166666666666665]]
+	year = Array.new()
+	avg = Array.new()
+	coord = Array.new()
+
+	info.each do |item|
+		year.push(item[:year].to_i)
+		avg.push(item[:a].to_f)
+	end
+
+	for i in 0...year.length
+		tmp = Array.new()
+		tmp.push(i)
+#		tmp.push(year[i])
+		tmp.push(avg[i])
+		coord.push(tmp)
+	end
+
+#	coord = [[0,0], [1,5], [2,1]]
+
+	GoogleChart::LineChart.new('520x400', "#{name}", true) do |lcxy|
+		lcxy.data "Trend", coord, '0000ff'
+		lcxy.show_legend = false
+		lcxy.axis :y, :range => [0,5]
+#    lcxy.axis :x, :range => [1992,2012]
+		lcxy.grid :x_step => 100.0/6.0, :y_step => 100.0/6.0, :length_segment => 1, :length_blank => 0
+		return lcxy.to_url
+	end
 end
