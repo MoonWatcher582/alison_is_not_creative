@@ -185,24 +185,28 @@ THRESHOLD = "3.5"
 
 		if params["country"].present?
 			# returns audience => average rating for a producing country's movies; we can show which of these averages are greater than the threshold, these are the countries you should market to
-			who_likes_our_movies = $DB.fetch("SELECT u.country, AVG(r.rating) FROM movies m, movie_rating r, users u WHERE m.country = ? AND m.id = r.film_id AND r.user_id = u.id GROUP BY u.country ORDER BY u.country;", params["country"])
+			who_likes_our_movies = $DB.fetch("SELECT u.country, AVG(r.rating) a FROM movies m, movie_rating r, users u WHERE m.country = ? AND m.id = r.film_id AND r.user_id = u.id GROUP BY u.country ORDER BY u.country;", params["country"])
+			who_likes_our_movies.select! { |row| row[:a] >= THRESHOLD }
 
 			# returns the count of averages at or above the threshold for a producing country, we can compare this number with the following query to tell the user if this country generally makes good movies
-			num_country_good_movies = $DB.fetch("SELECT COUNT(c.a) FROM (SELECT AVG(r.rating) a FROM movies m, movie_rating r WHERE m.country = ? AND m.id = r.film_id GROUP BY m.id) c WHERE c.a >= #{THRESHOLD};", params["country"])
+			num_country_good_movies = $DB.fetch("SELECT COUNT(c.a) ct  FROM (SELECT AVG(r.rating) a FROM movies m, movie_rating r WHERE m.country = ? AND m.id = r.film_id GROUP BY m.id) c WHERE c.a >= #{THRESHOLD};", params["country"])
+			good_movies = num_country_good_movies.first[:ct]
 
 			# returns the count of averages below the threshold for a producing country, we can compare this number with the above query to tell the user if this coutry generally makes good movies
-			num_country_bad_movies = $DB.fetch("SELECT COUNT(c.a) FROM (SELECT AVG(r.rating) a FROM movies m, movie_rating r WHERE m.country = ? AND m.id = r.film_id GROUP BY m.id) c WHERE c.a < #{THRESHOLD};", params["country"])
+			num_country_bad_movies = $DB.fetch("SELECT COUNT(c.a) ct FROM (SELECT AVG(r.rating) a FROM movies m, movie_rating r WHERE m.country = ? AND m.id = r.film_id GROUP BY m.id) c WHERE c.a < #{THRESHOLD};", params["country"])
+			bad_movies = num_country_bad_movies.first[:ct]
 		end
 
 		if params["audience"].present?
 			# returns genre => average rating for an audience country; we can show which of these averages are greater than the threshold, these genres are the ones we should market to our audience
-			genres_by_audience = $DB.fetch("SELECT g.genre, AVG(r.rating) FROM movie_rating r, genres g, is_genre ig, users u WHERE u.country = ? AND ig.genre_id = g.id AND r.film_id = ig.film_id GROUP BY ig.genre_id ORDER BY ig.genre_id;", params["audience"])
+			genres_by_audience = $DB.fetch("SELECT g.genre, AVG(r.rating) a FROM movie_rating r, genres g, is_genre ig, users u WHERE u.country = ? AND ig.genre_id = g.id AND r.film_id = ig.film_id GROUP BY ig.genre_id ORDER BY ig.genre_id;", params["audience"])
+			genres_by_audience.select! { |row| row[:a] >= THRESHOLD }
 		end
 
 		# massage query results so we can send them to the website
 		
 		# render website
-		haml :results, :locals => {director_and_actor: director_and_actor, director_by_genres: director_by_genres, director_by_time: director_by_time, actor_by_time: actor_by_time, actor_by_genres: actor_by_genres, actor_by_country: actor_by_country}
+		haml :results, :locals => {director_and_actor: director_and_actor, director_by_genres: director_by_genres, director_by_time: director_by_time, actor_by_time: actor_by_time, actor_by_genres: actor_by_genres, actor_by_country: actor_by_country, who_likes_our_movies: who_likes_our_movies, num_good_movies_by_country: good_movies, num_bad_movies_by_country: bad_movies, genres_by_audience: genres_by_audience}
 	end
 
 	# submit review form
