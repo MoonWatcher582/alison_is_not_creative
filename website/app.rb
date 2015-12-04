@@ -137,11 +137,9 @@ class MyApp < Sinatra::Base
 =begin
 	Database and constants
 =end
-	$DB = Sequel.connect('sqlite://movies.db')
+	yamlfile = YAML.load(open('./config/database.yml'))
+	$DB = Sequel.connect(database: yamlfile[:database], user: yamlfile[:username], password: yamlfile[:password], host: yamlfile[:host], port: yamlfile[:port], adapter: 'mysql2')
 	THRESHOLD = "3.5"
-yamlfile = YAML.load(open('./config/database.yml'))
-$DB = Sequel.connect(database: yamlfile[:database], user: yamlfile[:username], password: yamlfile[:password], host: yamlfile[:host], port: yamlfile[:port], adapter: 'mysql2')
-THRESHOLD = "3.5"
 
 =begin
 		ROUTES

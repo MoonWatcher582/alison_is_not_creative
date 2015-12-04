@@ -11,12 +11,12 @@
   %h2 Director: #{director}
   %h3 Average Ratings for #{director} in Each Genre:
   - director_by_genres.each do |genre|
-    %p Genre: #{genre[:genre]} || Avg Rating: #{genre[:a]}
+    %p Genre: #{genre[:genre]} || Avg Rating: #{genre[:a].to_f}
 
 - if director_by_time != nil
   %h3 Average Ratings for #{director} Throughout the Years:
   - director_by_time.each do |item|
-    %p Movie: #{item[:title]} || Year: #{item[:year]} || Avg Rating: #{item[:a]}
+    %p Movie: #{item[:title]} || Year: #{item[:year]} || Avg Rating: #{item[:a].to_f}
 
 // Show graph for director.
 - if director_graph_url != nil
@@ -28,17 +28,17 @@
   %h2 Actor: #{actor}
   %h3 Average Ratings in for #{actor} in Each Genre:
   - actor_by_genres.each do |genre|
-    %p Genre: #{genre[:genre]} || Avg Rating: #{genre[:a]}
+    %p Genre: #{genre[:genre]} || Avg Rating: #{genre[:a].to_f}
 
 - if actor_by_country != nil
   %h3 Average Ratings in Countries for Movies #{actor} Acted in:
   - actor_by_country.each do |item|
-    %p Country: #{item[:country]} || Avg Rating: #{item[:a]}
+    %p Country: #{item[:country]} || Avg Rating: #{item[:a].to_f}
 
 - if actor_by_time != nil
   %h3 Average Ratings for #{actor} Throughout the Years:
   - actor_by_time.each do |item|
-    %p Movie: #{item[:title]} || Year: #{item[:year]} || Avg Rating: #{item[:a]}
+    %p Movie: #{item[:title]} || Year: #{item[:year]} || Avg Rating: #{item[:a].to_f}
 
 // Show graph for actor.
 - if actor_graph_url != nil
@@ -57,7 +57,7 @@
   %h2 Country: #{country}
   %h3 Average Rating From Each Country:
   - who_likes_our_movies.each do |item|
-    %p Country: #{item[:country]} || Avg Rating: #{item[:a]}
+    %p Country: #{item[:country]} || Avg Rating: #{item[:a].to_f}
 - if num_good_movies_by_country != nil
   %h4 Number of Good Movies Produced by #{country}: [#{num_good_movies_by_country}]
 - if num_bad_movies_by_country != nil
@@ -68,4 +68,4 @@
   %h2 Audience: #{audience}
   %h3 Average Ratings in #{audience}:
   - genres_by_audience.each do |item|
-    %p Genre: #{item[:genre]} || Avg Rating: #{item[:a]}
+    %p Genre: #{item[:genre]} || Avg Rating: #{item[:a].to_f}
