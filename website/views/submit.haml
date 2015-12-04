@@ -1,19 +1,77 @@
-%a{ href: "/home" } Home Page
-&#x20;|
-%a{ href: "/submission" } Submit a New Review
-&#x20;|
-%a{ href: "/page/#{usrname}" } My Page (#{usrname}) 
-
-%h1 REVIEW SUBMISSION
-
-%p{ name: "result", id: "#{status}" } #{msg}
-
-%form{ action: "/review", method: "POST" }
-   %legend Submit a new review:
-   Movie Title:
-   %input{ name: "movie_title", required: true }
-   %br
-   Rating:
-   %input{ name: "rating", type: "number", min: "1", max: "5", required: true }
-   %br
-   %button{ type: "submit" } SUBMIT
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}
+      %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}
+        %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}
+          / The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
+          %meta{:content => "", :name => "description"}
+            %meta{:content => "", :name => "author"}
+              %link{:href => "../../favicon.ico", :rel => "icon"}
+                %title Submit
+                / Bootstrap core CSS
+                %link{:href => "http://bootswatch.com/sandstone/bootstrap.min.css", :rel => "stylesheet"}
+                  / IE10 viewport hack for Surface/desktop Windows 8 bug
+                  %link{:href => "http://getbootstrap.com/assets/css/ie10-viewport-bug-workaround.css", :rel => "stylesheet"}
+                    / Custom styles for this template
+                    %link{:href => "http://getbootstrap.com/examples/starter-template/starter-template.css", :rel => "stylesheet"}
+                      / Just for debugging purposes. Don't actually copy these 2 lines!
+                      /[if lt IE 9] <script src="../../assets/js/ie8-responsive-file-warning.js"></script>
+                      %script{:src => "http://getbootstrap.com/assets/js/ie-emulation-modes-warning.js"}
+                      / HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+                      /[if lt IE 9]
+                        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+                        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  %body
+    %nav.navbar.navbar-default.navbar-fixed-top
+      .container
+        .navbar-header
+          %button.navbar-toggle.collapsed{"aria-controls" => "navbar", "aria-expanded" => "false", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand{:href => "/home"} The Magical Compass
+        #navbar.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li
+              %a{:href => "/submission"} Submit a New Review
+            %li
+              %a{:href => "/page/#{usrname}"} My Page (#{usrname})
+            %li
+              %a{:href => "/logout"} Logout
+        / /.nav-collapse
+    .container
+      .starter-template
+      .col-md-6.col-md-offset-3
+        .well.bs-component
+          %form.form-horizontal{ action: "/review", method: "POST"} 
+            %fieldset.text-center
+              %legend Review Submission
+              .form-group
+                %label.col-lg-2.control-label{:for => "inputTitle"} Movie Title
+                .col-lg-10
+                  %input#inputTitle.form-control{ name: "movie_title", placeholder: "Movie Title", required: true}
+              .form-group
+                %label.col-lg-2.control-label{:for => "rating"} Rating
+                .col-lg-10
+                  %select#rating.form-control{ name: "rating" }
+                    %option 1
+                    %option 2
+                    %option 3
+                    %option 4
+                    %option 5
+              .form-group
+                .col-lg-10.col-lg-offset-2
+                  %button.btn.btn-default{ type: "reset"} Cancel
+                  %button.btn.btn-primary{ type: "submit"} Submit
+        #source-button.btn.btn-primary.btn-xs{:style => "display: none;"} &lt; &gt;
+        %p.text-center{ name: "result", id: "#{status}" } #{msg}
+    / /.container
+    /
+      Bootstrap core JavaScript
+      \==================================================
+    / Placed at the end of the document so the pages load faster
+    %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"}
+    :javascript
+      window.jQuery || document.write('<\/script>')
