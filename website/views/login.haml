@@ -1,14 +1,58 @@
-%h1 T H E M A G I C C O M P A S S
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}
+      %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}
+        %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}
+          / The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
+          %meta{:content => "", :name => "description"}
+            %meta{:content => "", :name => "author"}
+              %link{:href => "http://getbootstrap.com/favicon.ico", :rel => "icon"}
+                %title Signin Template for Bootstrap
+                / Bootstrap core CSS
+                %link{:href => "http://bootswatch.com/sandstone/bootstrap.min.css", :rel => "stylesheet"}
+                  / IE10 viewport hack for Surface/desktop Windows 8 bug
+                  %link{:href => "http://getbootstrap.com/assets/css/ie10-viewport-bug-workaround.css", :rel => "stylesheet"}
+                    / Custom styles for this template
+                    %link{:href => "http://getbootstrap.com/examples/signin/signin.css", :rel => "stylesheet"}
+                      / Just for debugging purposes. Don't actuallyf copy these 2 lines!
+                      /[if lt IE 9] <script src="../../assets/js/ie8-responsive-file-warning.js"></script>
+                      %script{:src => "http://getbootstrap.com/assets/js/ie-emulation-modes-warning.js"}
+                      / HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+                      /[if lt IE 9]
+                        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+                        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  %body
+    .container
+      .starter-template
+        .bs-component
+          .jumbotron
+            %h1 The Magic Compass
+            %p Holding on to a script and a director or trying to get a project going with some actors, but scared the market won't take kindly to it? Using the Magic Compass, we'll compile statistics based on your upcoming project and give you the information you need to know if you should invest or continue.
+      %form.form-signin{ action: "/session", method: "POST" }
+        %h2.form-signin-heading Log In
+        //%label.sr-only{:for => "inputEmail"} User Name
+        %input#inputEmail.form-control{ name: "user", placeholder: "User Name", required: true}
+          //%label.sr-only{:for => "inputPassword"} Password
+        %input#inputPassword.form-control{ name: "pass", placeholder: "Password", required: true}
+        %button.btn.btn-lg.btn-primary.btn-block{ type: "submit"} Sign in
+    / /container
+    / IE10 viewport hack for Surface/desktop Windows 8 bug
+    %script{:src => "http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"}
 
-%p Holding on to a script and a director or trying to get a project going with some actors, but scared the market won't take kindly to it?
-%p Using the Magic Compass, we'll compile statistics based on your upcoming project and give you the information you need to know if you should invest or continue.
 
-%form{ action: "/session", method: "POST" }
-   %legend LOG IN:
-   Username: 
-   %input{ name: "user", required: true }
-   %br
-   Password: 
-   %input{ name: "pass", required: true }
-   %br
-   %button{ type: "submit" } SUBMIT
+-#
+  %h1 T H E M A G I C C O M P A S S
+
+  %p Holding on to a script and a director or trying to get a project going with some actors, but scared the market won't take kindly to it?
+  %p Using the Magic Compass, we'll compile statistics based on your upcoming project and give you the information you need to know if you should invest or continue.
+
+  %form{ action: "/session", method: "POST" }
+    %legend LOG IN:
+    Username: 
+    %input{ name: "user", required: true }
+    %br
+    Password: 
+    %input{ name: "pass", required: true }
+    %br
+    %button{ type: "submit" } SUBMIT
