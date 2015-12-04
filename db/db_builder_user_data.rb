@@ -1,5 +1,7 @@
-require 'sequel'
 require 'bcrypt'
+require 'mysql2'
+require 'sequel'
+require 'yaml'
 
 if ARGV.length != 2 or ARGV[0] == '-h'
 	puts "USAGE: ruby db_builder_user_data.rb <user info file> <ratings file>"
@@ -21,7 +23,8 @@ def element_exists?(value, table, column)
 	DB["SELECT * FROM #{table} WHERE #{column} = #{value.chomp}"].count > 0
 end
 
-DB = Sequel.connect('sqlite://movies.db')
+yamlfile = YAML.load(open('../website/config/database.yml'))
+DB = Sequel.connect(database: yamlfile[:database], user: yamlfile[:username], password: yamlfile[:password], host: yamlfile[:host], port: yamlfile[:port], adapter: 'mysql2')
 
 puts "Parsing and inserting from #{ARGV[0]}"
 File.open(ARGV[0], 'r') do |user_info|
@@ -37,6 +40,7 @@ File.open(ARGV[0], 'r') do |user_info|
 	end
 end
 
+puts "Parsing and inserting from #{ARGV[1]}"
 File.open(ARGV[1], 'r') do |data|
 	data.each_line do |line|
 		relation = line.chomp.split(',')
