@@ -277,7 +277,7 @@ class MyApp < Sinatra::Base
 			msg = "Successfully added new rating!"
 			status = "success"
 		end
-		haml :submit, :locals => {msg: msg, status: status} 
+		haml :submit, :locals => {msg: msg, status: status, usrname: current_user.username} 
 	end
 
 	# user's page (review list)
