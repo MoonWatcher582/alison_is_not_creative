@@ -273,7 +273,7 @@ class MyApp < Sinatra::Base
 			msg = "Movie not found!"
 			status = "error"
 		else
-			$DB["INSERT INTO movie_rating VALUES(NULL, ?, ?, ?);", params["rating"], current_user.id, film_id]
+			$DB["INSERT INTO movie_rating VALUES(NULL, ?, ?, ?);", params["rating"], current_user.id, film_id].insert
 			msg = "Successfully added new rating!"
 			status = "success"
 		end
