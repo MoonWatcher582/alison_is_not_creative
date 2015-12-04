@@ -99,11 +99,43 @@ class MyApp < Sinatra::Base
 		warden_handler.user
 	end
 
+	# Producing Graph URL
+	def make_graph(info, name)
+		#	test = [[0,0], [1992,3.3076923076923075], [1994,2.7777777777777777], [1997,2.8125], [2003,3.5454545454545454], [2004,2.8333333333333335], [2007,2.8181818181818183], [2009,2.76], [2012,3.4166666666666665]]
+		year = Array.new()
+		avg = Array.new()
+		coord = Array.new()
+
+		info.each do |item|
+			year.push(item[:year].to_i)
+			avg.push(item[:a].to_f)
+		end
+
+		for i in 0...year.length
+			tmp = Array.new()
+			tmp.push(i)
+			#		tmp.push(year[i])
+			tmp.push(avg[i])
+			coord.push(tmp)
+		end
+
+		#	coord = [[0,0], [1,5], [2,1]]
+
+		GoogleChart::LineChart.new('520x400', "#{name}", true) do |lcxy|
+			lcxy.data "Trend", coord, '0000ff'
+			lcxy.show_legend = false
+			#		lcxy.axis :y, :range => [0,10]
+			#    lcxy.axis :x, :range => [1992,2012]
+			lcxy.grid :x_step => 100.0/6.0, :y_step => 100.0/6.0, :length_segment => 1, :length_blank => 0
+			return lcxy.to_url
+		end
+	end
+
 =begin
 	Database and constants
 =end
-$DB = Sequel.connect('sqlite://movies.db')
-THRESHOLD = "3.5"
+	$DB = Sequel.connect('sqlite://movies.db')
+	THRESHOLD = "3.5"
 
 =begin
 		ROUTES
@@ -173,7 +205,7 @@ THRESHOLD = "3.5"
 
 			# returns (movie, year) => average rating for a director's filmography; we should graph this or show it raw
 			director_by_time = $DB.fetch("SELECT m.title, m.year, AVG(r.rating) a FROM movies m, movie_rating r, directed_by d WHERE d.director_id = (SELECT id FROM directors WHERE name = ? LIMIT 1) AND m.id = d.film_id AND m.id = r.film_id GROUP BY r.film_id ORDER BY m.year;", params["director"])
-		director_graph_url = make_graph(director_by_time, params["director"])
+			director_graph_url = make_graph(director_by_time, params["director"])
 		end
 
 		if params["actor"].present?
@@ -211,7 +243,7 @@ THRESHOLD = "3.5"
 		end
 
 		# massage query results so we can send them to the website
-		
+
 		# render website
 		haml :results, :locals => {director: params["director"], actor: params["actor"], audience: params["audience"], country: params["country"], actor_graph_url: actor_graph_url, director_graph_url: director_graph_url, director_and_actor: director_and_actor, director_by_genres: director_by_genres, director_by_time: director_by_time, actor_by_time: actor_by_time, actor_by_genres: actor_by_genres, actor_by_country: actor_by_country, who_likes_our_movies: who_likes_our_movies, num_good_movies_by_country: good_movies, num_bad_movies_by_country: bad_movies, genres_by_audience: genres_by_audience}
 	end
@@ -257,7 +289,7 @@ THRESHOLD = "3.5"
 		end
 
 		# get a list of user's reviews from DB
-		reviews = $DB.fetch("SELECT m.title, r.rating FROM movies m, movie_rating r WHERE m.id = r.film_id AND r.user_id = ?;", id) 
+		reviews = $DB.fetch("SELECT m.title, r.rating, m.year, m.rated, m.country FROM movies m, movie_rating r WHERE m.id = r.film_id AND r.user_id = ?;", id) 
 
 		haml :user_page, :locals => {pagename: usrname, name: name, age: age, country: country, reviews: reviews, usrname: current_user.username}
 	end
@@ -270,34 +302,4 @@ THRESHOLD = "3.5"
 	run! if __FILE__ == $0
 end
 
-# Producing Graph URL
-def make_graph(info, name)
-#	test = [[0,0], [1992,3.3076923076923075], [1994,2.7777777777777777], [1997,2.8125], [2003,3.5454545454545454], [2004,2.8333333333333335], [2007,2.8181818181818183], [2009,2.76], [2012,3.4166666666666665]]
-	year = Array.new()
-	avg = Array.new()
-	coord = Array.new()
 
-	info.each do |item|
-		year.push(item[:year].to_i)
-		avg.push(item[:a].to_f)
-	end
-
-	for i in 0...year.length
-		tmp = Array.new()
-		tmp.push(i)
-#		tmp.push(year[i])
-		tmp.push(avg[i])
-		coord.push(tmp)
-	end
-
-#	coord = [[0,0], [1,5], [2,1]]
-
-	GoogleChart::LineChart.new('520x400', "#{name}", true) do |lcxy|
-		lcxy.data "Trend", coord, '0000ff'
-		lcxy.show_legend = false
-		lcxy.axis :y, :range => [0,5]
-#    lcxy.axis :x, :range => [1992,2012]
-		lcxy.grid :x_step => 100.0/6.0, :y_step => 100.0/6.0, :length_segment => 1, :length_blank => 0
-		return lcxy.to_url
-	end
-end
