@@ -1,71 +1,333 @@
-%h1 RESULTS
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}
+      %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}
+        %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}
+          / The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
+          %meta{:content => "", :name => "description"}
+            %meta{:content => "", :name => "author"}
+              %link{:href => "../../favicon.ico", :rel => "icon"}
+                %title  Results
+                / Bootstrap core CSS
+                %link{:href => "http://bootswatch.com/sandstone/bootstrap.min.css", :rel => "stylesheet"}
+                  / IE10 viewport hack for Surface/desktop Windows 8 bug
+                  %link{:href => "http://getbootstrap.com/assets/css/ie10-viewport-bug-workaround.css", :rel => "stylesheet"}
+                    / Custom styles for this template
+                    %link{:href => "http://getbootstrap.com/examples/starter-template/starter-template.css", :rel => "stylesheet"}
+                      / Just for debugging purposes. Don't actually copy these 2 lines!
+                      /[if lt IE 9] <script src="../../assets/js/ie8-responsive-file-warning.js"></script>
+                      %script{:src => "http://getbootstrap.com/assets/js/ie-emulation-modes-warning.js"}
+                      / HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+                      /[if lt IE 9]
+                        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+                        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  %body
+    %nav.navbar.navbar-default.navbar-fixed-top
+      .container
+        .navbar-header
+          %button.navbar-toggle.collapsed{"aria-controls" => "navbar", "aria-expanded" => "false", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand{:href => "/home"} The Magical Compass
+        #navbar.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li
+              %a{:href => "/submission"} Submit a New Review
+            %li
+              %a{:href => "/page/#{usrname}"} Profile (#{usrname})
+            %li
+              %a{:href => "/logout"} Logout
+        / /.nav-collapse
+    .container
+      .starter-template
+        .bs-component
+          // No inputs were given
+          - if director_and_actor == nil && director_by_genres == nil && director_by_time == nil && actor_by_time == nil && actor_by_genres == nil && actor_by_country == nil && who_likes_our_movies == nil && num_good_movies_by_country == nil && num_bad_movies_by_country == nil && genres_by_audience == nil && director_graph_url == nil && actor_graph_url == nil
+            .col-md-6.col-md-offset-3
+              .jumbotron
+                %h1 Results
+                %p No inputs given.
+                %a.btn.btn-primary.btn-lg{:href => "/home"} Submit a new Search
+          - if director_by_genres != nil
+            .jumbotron
+              %h1.text-center Director: #{director}
+      // Show graph for director.
+      - if director_graph_url != nil
+        .col-md-6.col-md-offset-3
+          %img{:src => "#{director_graph_url}"} 
+      / A director has been enetered.
+      - if director_by_genres != nil
+        .row
+          .col-lg-12
+            .page-header
+              %h1#tables &nbsp;&nbsp;Average Rating by Genre &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Average Rating by Time
+            .col-md-5
+              .bs-component
+                %table.table.table-striped.table-hover{ style: "float: left"}
+                  %thead
+                    %tr
+                      %td Genre:   
+                      %td.text-center Average Rating:
+                  %tbody
+                  - director_by_genres.each do |genre|
+                    %tr
+                      %td #{genre[:genre]}
+                      %td.text-center #{genre[:a].to_f}
+            .col-md-7
+              .bs-component
+                %table.table.table-striped.table-hover{ style: "float: left"}
+                  %thead
+                    %tr
+                      %td Title:   
+                      %td.text-center Year:
+                      %td.text-center Average Rating:
+                  %tbody
+                  - director_by_time.each do |item|
+                    %tr
+                      %td #{item[:title]}
+                      %td.text-center #{item[:year]}
+                      %td.text-center #{item[:a].to_f}
+                #source-button.btn.btn-primary.btn-xs{:style => "display: none;"} &lt; &gt;
+        %br
+        %br
+        %br
+        %br        
+      .bs-component
+        - if actor_by_time != nil
+          .jumbotron{:style => "\n    margin-bottom: 60px;\n    "}
+            %h1.text-center Actor: #{actor}
+      // Show graph for actor.
+      - if actor_graph_url != nil
+        %div{:style => "display:inline;text-align:left; "}
+          %img{:src => "#{actor_graph_url}", style: "float: left"}
+        / An actor has been enetered.
+        %div{:style => "float: left"}
+          - if actor_by_time != nil
+            .row
+              .col-lg-12.col-md-offset-3
+                .page-header
+                  %h1#tables Average Rating by Time
+                .bs-component
+                  %table.table.table-striped.table-hover
+                    %thead
+                      %tr
+                        %td Title:   
+                        %td.text-center Year:
+                        %td.text-center Average Rating:
+                    %tbody
+                    - actor_by_time.each do |item|
+                      %tr
+                        %td #{item[:title]}
+                        %td.text-center #{item[:year]}
+                        %td.text-center #{item[:a].to_f}
+                  #source-button.btn.btn-primary.btn-xs{:style => "display: none;"} &lt; &gt;
+        .row
+          .col-lg-12
+            .page-header
+              %h1#tables &nbsp;&nbsp;Average Rating by Genre &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Average Rating by Country
+            .col-md-5
+              .bs-component
+                %table.table.table-striped.table-hover{ style: "float: left"}
+                  %thead
+                    %tr
+                      %td Genre:   
+                      %td.text-center Average Rating:
+                  %tbody
+                  - actor_by_genres.each do |genre|
+                    %tr
+                      %td #{genre[:genre]}
+                      %td.text-center #{genre[:a].to_f}
+            .col-md-7
+              .bs-component
+                %table.table.table-striped.table-hover{ style: "float: left"}
+                  %thead
+                    %tr
+                      %td Country:   
+                      %td.text-center Average Rating:
+                  %tbody
+                  - actor_by_country.each do |item|
+                    %tr
+                      %td #{item[:country]}
+                      %td.text-center #{item[:a].to_f}
+                #source-button.btn.btn-primary.btn-xs{:style => "display: none;"} &lt; &gt;
+      .col-md-6.col-md-offset-3
+        .bs-component
+          // A director and an actor have been entered.
+          - if director_and_actor != nil
+            .panel.panel-default{:style => "\n    margin-top: 30px;\n"}
+              .panel-heading Will #{director} and #{actor} be a good investment?
+              .panel-body
+                - if director_and_actor == true
+                  The data shows that your movie will benefit if they work together.
+                - else
+                  The data shows that your movie will not benefit if they work together.
+      - if actor_by_time != nil
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+      .bs-component
+        - if who_likes_our_movies != nil
+          .jumbotron
+            %h1.text-center Producing Country: #{country}
+          %div{ style: "float: left"}
+            .row{:style => "\n    padding-left: 100px;\n"}
+              .col-lg-12
+                .page-header
+                  %h1#tables &nbsp;&nbsp;Average Rating by Country
+                .col-lg-12
+                  .bs-component
+                    %table.table.table-striped.table-hover{ style: "float: left"}
+                      %thead
+                        %tr
+                          %td Country:   
+                          %td.text-center Average Rating:
+                      %tbody
+                      - who_likes_our_movies.each do |item|
+                        %tr
+                          %td #{item[:country]}
+                          %td.text-center #{item[:a].to_f}
+                    #source-button.btn.btn-primary.btn-xs{:style => "display: none;"} &lt; &gt;
+          %div{ style: "float: left"}
+            .bs-component
+              %ul.list-group{:style => "\n    margin-top: 170px;\n    margin-left: 185px;\n    "}
+                - if num_good_movies_by_country != nil
+                  %li.list-group-item
+                    %span.badge #{num_good_movies_by_country}
+                    Number of Good Movies Produced&nbsp;&nbsp;
+                - if num_bad_movies_by_country != nil
+                  %li.list-group-item
+                    %span.badge #{num_bad_movies_by_country}
+                    Number of Bad Movies Produced&nbsp;&nbsp;
+              #source-button.btn.btn-primary.btn-xs{:style => "display: none;"} &lt; &gt;
+        - if who_likes_our_movies != nil
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+          %br
+      // An audience country was entered.
+      .bs-component
+        - if genres_by_audience != nil
+          .jumbotron
+            %h1.text-center Audience Country: #{audience}
+          .col-md-6.col-md-offset-3
+            .row
+              .col-lg-12
+                .page-header
+                  %h1#tables.text-center &nbsp;&nbsp;Average Rating by Genre
+                .col-lg-12
+                  .bs-component
+                    %table.table.table-striped.table-hover
+                      %thead
+                        %tr
+                          %td.text-center Genre:   
+                          %td.text-center Average Rating:
+                      %tbody
+                      - genres_by_audience.each do |item|
+                        %tr
+                          %td.text-center #{item[:genre]}
+                          %td.text-center #{item[:a].to_f}
+                    #source-button.btn.btn-primary.btn-xs{:style => "display: none;"} &lt; &gt;
 
-// No inputs were given
-- if director_and_actor == nil && director_by_genres == nil && director_by_time == nil && actor_by_time == nil && actor_by_genres == nil && actor_by_country == nil && who_likes_our_movies == nil && num_good_movies_by_country == nil && num_bad_movies_by_country == nil && genres_by_audience == nil && director_graph_url == nil && actor_graph_url == nil
-  %p No inputs were given.
-  %button{ type: "submit" } SUBMIT
-  %a{ href: "/home" } Go back.
+-#
+  %h1 RESULTS
 
-// A director has been enetered.
-- if director_by_genres != nil
-  %h2 Director: #{director}
-  %h3 Average Ratings for #{director} in Each Genre:
-  - director_by_genres.each do |genre|
-    %p Genre: #{genre[:genre]} || Avg Rating: #{genre[:a].to_f}
+  // No inputs were given
+  - if director_and_actor == nil && director_by_genres == nil && director_by_time == nil && actor_by_time == nil && actor_by_genres == nil && actor_by_country == nil && who_likes_our_movies == nil && num_good_movies_by_country == nil && num_bad_movies_by_country == nil && genres_by_audience == nil && director_graph_url == nil && actor_graph_url == nil
+    %p No inputs were given.
+    %button{ type: "submit" } SUBMIT
+    %a{ href: "/home" } Go back.
 
-- if director_by_time != nil
-  %h3 Average Ratings for #{director} Throughout the Years:
-  - director_by_time.each do |item|
-    %p Movie: #{item[:title]} || Year: #{item[:year]} || Avg Rating: #{item[:a].to_f}
+  // A director has been enetered.
+  - if director_by_genres != nil
+    %h2 Director: #{director}
+    %h3 Average Ratings for #{director} in Each Genre:
+    - director_by_genres.each do |genre|
+      %p Genre: #{genre[:genre]} || Avg Rating: #{genre[:a].to_f}
 
-// Show graph for director.
-- if director_graph_url != nil
-  %img{:src => "#{director_graph_url}"} 
+  - if director_by_time != nil
+    %h3 Average Ratings for #{director} Throughout the Years:
+    - director_by_time.each do |item|
+      %p Movie: #{item[:title]} || Year: #{item[:year]} || Avg Rating: #{item[:a].to_f}
+
+  // Show graph for director.
+  - if director_graph_url != nil
+    %img{:src => "#{director_graph_url}"} 
 
 
-// An actor has been entered.
-- if actor_by_genres != nil
-  %h2 Actor: #{actor}
-  %h3 Average Ratings in for #{actor} in Each Genre:
-  - actor_by_genres.each do |genre|
-    %p Genre: #{genre[:genre]} || Avg Rating: #{genre[:a].to_f}
+  // An actor has been entered.
+  - if actor_by_genres != nil
+    %h2 Actor: #{actor}
+    %h3 Average Ratings in for #{actor} in Each Genre:
+    - actor_by_genres.each do |genre|
+      %p Genre: #{genre[:genre]} || Avg Rating: #{genre[:a].to_f}
 
-- if actor_by_country != nil
-  %h3 Average Ratings in Countries for Movies #{actor} Acted in:
-  - actor_by_country.each do |item|
-    %p Country: #{item[:country]} || Avg Rating: #{item[:a].to_f}
+  - if actor_by_country != nil
+    %h3 Average Ratings in Countries for Movies #{actor} Acted in:
+    - actor_by_country.each do |item|
+      %p Country: #{item[:country]} || Avg Rating: #{item[:a].to_f}
 
-- if actor_by_time != nil
-  %h3 Average Ratings for #{actor} Throughout the Years:
-  - actor_by_time.each do |item|
-    %p Movie: #{item[:title]} || Year: #{item[:year]} || Avg Rating: #{item[:a].to_f}
+  - if actor_by_time != nil
+    %h3 Average Ratings for #{actor} Throughout the Years:
+    - actor_by_time.each do |item|
+      %p Movie: #{item[:title]} || Year: #{item[:year]} || Avg Rating: #{item[:a].to_f}
 
-// Show graph for actor.
-- if actor_graph_url != nil
-  %img{:src => "#{actor_graph_url}"} 
+  // Show graph for actor.
+  - if actor_graph_url != nil
+    %img{:src => "#{actor_graph_url}"} 
 
-// A director and an actor have been entered.
-- if director_and_actor != nil
-  %h2 Conclusion:
-  - if director_and_actor == true
-    %p Your movie will benefit if #{actor} and #{director} work together.
-  - else
-    %p Your movie will not benefit if #{actor} and #{director} work together.
+  // A director and an actor have been entered.
+  - if director_and_actor != nil
+    %h2 Conclusion:
+    - if director_and_actor == true
+      %p Your movie will benefit if #{actor} and #{director} work together.
+    - else
+      %p Your movie will not benefit if #{actor} and #{director} work together.
 
-// A producing country was entered.
-- if who_likes_our_movies != nil
-  %h2 Country: #{country}
-  %h3 Average Rating From Each Country:
-  - who_likes_our_movies.each do |item|
-    %p Country: #{item[:country]} || Avg Rating: #{item[:a].to_f}
-- if num_good_movies_by_country != nil
-  %h4 Number of Good Movies Produced by #{country}: [#{num_good_movies_by_country}]
-- if num_bad_movies_by_country != nil
-  %h4 Number of Bad Movies Produced by #{country}: [#{num_bad_movies_by_country}]
+  // A producing country was entered.
+  - if who_likes_our_movies != nil
+    %h2 Country: #{country}
+    %h3 Average Rating From Each Country:
+    - who_likes_our_movies.each do |item|
+      %p Country: #{item[:country]} || Avg Rating: #{item[:a].to_f}
+  - if num_good_movies_by_country != nil
+    %h4 Number of Good Movies Produced by #{country}: [#{num_good_movies_by_country}]
+  - if num_bad_movies_by_country != nil
+    %h4 Number of Bad Movies Produced by #{country}: [#{num_bad_movies_by_country}]
 
-// An audience country was entered.A
-- if genres_by_audience != nil
-  %h2 Audience: #{audience}
-  %h3 Average Ratings in #{audience}:
-  - genres_by_audience.each do |item|
-    %p Genre: #{item[:genre]} || Avg Rating: #{item[:a].to_f}
+  // An audience country was entered.A
+  - if genres_by_audience != nil
+    %h2 Audience: #{audience}
+    %h3 Average Ratings in #{audience}:
+    - genres_by_audience.each do |item|
+      %p Genre: #{item[:genre]} || Avg Rating: #{item[:a].to_f}

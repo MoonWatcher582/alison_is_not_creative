@@ -124,11 +124,11 @@ class MyApp < Sinatra::Base
 
 		#	coord = [[0,0], [1,5], [2,1]]
 
-		GoogleChart::LineChart.new('520x400', "#{name}", true) do |lcxy|
+		GoogleChart::LineChart.new('520x400', "", true) do |lcxy|
 			lcxy.data "Trend", coord, '0000ff'
 			lcxy.show_legend = false
-			#		lcxy.axis :y, :range => [0,10]
-			#    lcxy.axis :x, :range => [1992,2012]
+			lcxy.axis :y, :range => [0,6], :labels => ["", "", "G", "N", "I", "T", "A", "R", "", ""], :color => '000000', :font_size => 20, :alignment => :center
+			lcxy.axis :x, :labels => ["", "", "", "", "Y", "E", "A", "R", "", "", "", ""], :color => '000000', :font_size => 20, :alignment => :center
 			lcxy.grid :x_step => 100.0/6.0, :y_step => 100.0/6.0, :length_segment => 1, :length_blank => 0
 			return lcxy.to_url
 		end
@@ -249,7 +249,7 @@ class MyApp < Sinatra::Base
 		# massage query results so we can send them to the website
 
 		# render website
-		haml :results, :locals => {director: params["director"], actor: params["actor"], audience: params["audience"], country: params["country"], actor_graph_url: actor_graph_url, director_graph_url: director_graph_url, director_and_actor: director_and_actor, director_by_genres: director_by_genres, director_by_time: director_by_time, actor_by_time: actor_by_time, actor_by_genres: actor_by_genres, actor_by_country: actor_by_country, who_likes_our_movies: who_likes_our_movies, num_good_movies_by_country: good_movies, num_bad_movies_by_country: bad_movies, genres_by_audience: genres_by_audience}
+		haml :results, :locals => {usrname: current_user.username, director: params["director"], actor: params["actor"], audience: params["audience"], country: params["country"], actor_graph_url: actor_graph_url, director_graph_url: director_graph_url, director_and_actor: director_and_actor, director_by_genres: director_by_genres, director_by_time: director_by_time, actor_by_time: actor_by_time, actor_by_genres: actor_by_genres, actor_by_country: actor_by_country, who_likes_our_movies: who_likes_our_movies, num_good_movies_by_country: good_movies, num_bad_movies_by_country: bad_movies, genres_by_audience: genres_by_audience}
 	end
 
 	# submit review form
