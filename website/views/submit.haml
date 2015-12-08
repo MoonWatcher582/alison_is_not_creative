@@ -51,7 +51,10 @@
               .form-group
                 %label.col-lg-2.control-label{:for => "inputTitle"} Movie Title
                 .col-lg-10
-                  %input#inputTitle.form-control{ name: "movie_title", placeholder: "Movie Title", required: true}
+                  %select#inputTitle.form-control{ name: "movie_title", required: true}
+                    %option
+                      - movies.each do |m|
+                        %option #{m[:title]}
               .form-group
                 %label.col-lg-2.control-label{:for => "rating"} Rating
                 .col-lg-10

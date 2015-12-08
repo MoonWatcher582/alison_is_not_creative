@@ -55,19 +55,31 @@
               .form-group
                 %label.col-lg-2.control-label{:for => "inputDirector"} Director
                 .col-lg-10
-                  %input#inputDirector.form-control{ name: "director", placeholder: "Director"}
+                  %select#inputDirector.form-control{ name: "director"}
+                    %option 
+                    - directors.each do |d| 
+                      %option #{d[:name]}
               .form-group
                 %label.col-lg-2.control-label{:for => "inputActor"} Actor
                 .col-lg-10
-                  %input#inputActor.form-control{ name: "actor", placeholder: "Actor"}
+                  %select#inputActor.form-control{ name: "actor", placeholder: "Actor"}
+                    %option 
+                    - actors.each do |a|
+                      %option #{a[:name]}
               .form-group
                 %label.col-lg-2.control-label{:for => "inputCountry"} Producing Country
                 .col-lg-10
-                  %input#inputCountry.form-control{ name: "country", placeholder: "Country"}
+                  %select#inputCountry.form-control{ name: "country", placeholder: "Country"}
+                    %option 
+                    - countries.each do |c|
+                      %option #{c[:country]}
               .form-group
                 %label.col-lg-2.control-label{:for => "inputAudience"} Audience Country
                 .col-lg-10
-                  %input#inputAudience.form-control{ name: "audience", placeholder: "Audience"}
+                  %select#inputAudience.form-control{ name: "audience", placeholder: "Audience"}
+                    %option 
+                    - audience.each do |a|
+                      %option #{a[:country]}
               .form-group
                 .col-lg-10.col-lg-offset-2
                   %button.btn.btn-default{ type: "reset"} Cancel

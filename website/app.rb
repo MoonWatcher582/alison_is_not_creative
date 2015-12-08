@@ -139,7 +139,7 @@ class MyApp < Sinatra::Base
 =end
 	yamlfile = YAML.load(open('./config/database.yml'))
 	$DB = Sequel.connect(database: yamlfile[:database], user: yamlfile[:username], password: yamlfile[:password], host: yamlfile[:host], port: yamlfile[:port], adapter: 'mysql2')
-	THRESHOLD = "3.5"
+	THRESHOLD = 3.5
 
 =begin
 		ROUTES
@@ -171,7 +171,11 @@ class MyApp < Sinatra::Base
 	# home page (query form)
 	get '/home' do
 		check_authentication
-		haml :home, :locals => {usrname: current_user.username}	
+		directors = $DB.fetch("SELECT DISTINCT name FROM directors;")
+		actors = $DB.fetch("SELECT DISTINCT name FROM actors;")
+		countries = $DB.fetch("SELECT DISTINCT country FROM movies;")
+		audience = $DB.fetch("SELECT DISTINCT country FROM users;")
+		haml :home, :locals => {usrname: current_user.username, directors: directors, actors: actors, countries: countries, audience: audience}	
 	end
 
 	# make a query
@@ -255,7 +259,8 @@ class MyApp < Sinatra::Base
 	# submit review form
 	get '/submission' do
 		check_authentication
-		haml :submit, :locals => {msg: "", status: "success", usrname: current_user.username}
+		movies = $DB.fetch("SELECT title FROM movies;")
+		haml :submit, :locals => {msg: "", status: "success", usrname: current_user.username, movies: movies}
 	end
 
 	# submit review
@@ -277,7 +282,8 @@ class MyApp < Sinatra::Base
 			msg = "Successfully added new rating!"
 			status = "success"
 		end
-		haml :submit, :locals => {msg: msg, status: status, usrname: current_user.username} 
+		movies = $DB.fetch("SELECT title FROM movies;")
+		haml :submit, :locals => {msg: msg, status: status, usrname: current_user.username, movies: movies} 
 	end
 
 	# user's page (review list)
